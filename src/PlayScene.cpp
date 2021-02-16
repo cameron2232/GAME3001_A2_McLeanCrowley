@@ -214,8 +214,8 @@ void PlayScene::m_computeTileCosts()
 {
 	for (auto tile : m_pGrid)
 	{
-		auto distance = Util::distance(m_pTarget->getGridPosition(), tile->getGridPosition());
-		tile->setTileCost(distance);
+		//auto distance = Util::distance(m_pTarget->getGridPosition(), tile->getGridPosition());
+		tile->setTileCost(m_pTarget->getGridPosition(), tile->getGridPosition());
 	}
 }
 

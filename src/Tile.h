@@ -23,7 +23,7 @@ public:
 	void setNeighbourTile(NeighbourTile position, Tile* tile);
 
 	float getTileCost() const;
-	void setTileCost(float cost);
+	void setTileCost(glm::vec2 target, glm::vec2 tile);
 
 	void addLabels();
 	void setLabelsEnabled(bool state);

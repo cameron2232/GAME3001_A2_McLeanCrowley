@@ -1,377 +1,143 @@
-﻿  Button.cpp
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\Button.cpp(22,15): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\Button.cpp(23,16): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\Button.cpp(38,46): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\Button.cpp(38,43): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-  CollisionManager.cpp
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\CollisionManager.cpp(9,28): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\CollisionManager.cpp(9,21): warning C4244: 'initializing': conversion from 'T' to 'const int', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\CollisionManager.cpp(10,28): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\CollisionManager.cpp(10,21): warning C4244: 'initializing': conversion from 'T' to 'const int', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\CollisionManager.cpp(20,72): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\CollisionManager.cpp(20,24): warning C4244: 'initializing': conversion from 'float' to 'const int', possible loss of data
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\CollisionManager.cpp(57,41): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\CollisionManager.cpp(57,22): warning C4244: 'initializing': conversion from 'int' to 'const float', possible loss of data
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\CollisionManager.cpp(58,43): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\CollisionManager.cpp(58,23): warning C4244: 'initializing': conversion from 'int' to 'const float', possible loss of data
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\CollisionManager.cpp(59,41): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\CollisionManager.cpp(59,22): warning C4244: 'initializing': conversion from 'int' to 'const float', possible loss of data
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\CollisionManager.cpp(60,43): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\CollisionManager.cpp(60,23): warning C4244: 'initializing': conversion from 'int' to 'const float', possible loss of data
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\CollisionManager.cpp(178,9): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\CollisionManager.cpp(187,36): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\CollisionManager.cpp(187,25): warning C4244: 'initializing': conversion from 'float' to 'const int', possible loss of data
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\CollisionManager.cpp(189,38): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\CollisionManager.cpp(189,26): warning C4244: 'initializing': conversion from 'float' to 'const int', possible loss of data
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\CollisionManager.cpp(192,60): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\CollisionManager.cpp(192,50): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\CollisionManager.cpp(218,19): warning C4244: 'return': conversion from '_Ty' to 'int', possible loss of data
-          with
-          [
-              _Ty=float
-          ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\CollisionManager.cpp(225,35): warning C4244: 'initializing': conversion from 'const _Ty' to 'int', possible loss of data
-          with
-          [
-              _Ty=float
-          ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\CollisionManager.cpp(225,25): warning C4244: 'initializing': conversion from 'const _Ty' to 'const int', possible loss of data
-          with
-          [
-              _Ty=float
-          ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\CollisionManager.cpp(228,19): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\CollisionManager.cpp(230,20): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\CollisionManager.cpp(307,38): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\CollisionManager.cpp(307,23): warning C4244: 'initializing': conversion from 'double' to 'const float', possible loss of data
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\CollisionManager.cpp(308,38): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\CollisionManager.cpp(308,23): warning C4244: 'initializing': conversion from 'double' to 'const float', possible loss of data
-  Goal.cpp
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\Goal.cpp(12,15): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\Goal.cpp(13,16): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\Goal.cpp(32,46): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\Goal.cpp(32,43): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-  Obstacle.cpp
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\Obstacle.cpp(12,15): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\Obstacle.cpp(13,16): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\Obstacle.cpp(29,55): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\Obstacle.cpp(29,27): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-  SpaceShip.cpp
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\SpaceShip.cpp(12,15): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\SpaceShip.cpp(13,16): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\SpaceShip.cpp(33,55): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\SpaceShip.cpp(33,27): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-  Sprite.cpp
-  Tile.cpp
-  UIControl.cpp
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\UIControl.cpp(33,101): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\UIControl.cpp(33,88): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  DisplayObject.cpp
-  EndScene.cpp
-  Game.cpp
-  GameObject.cpp
-  Label.cpp
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\Label.cpp(15,15): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\Label.cpp(16,16): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\Label.cpp(30,52): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\Label.cpp(30,49): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\Label.cpp(52,15): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\Label.cpp(53,16): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\Label.cpp(71,15): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\Label.cpp(72,16): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-  PlayScene.cpp
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\PlayScene.cpp(103,62): warning C4838: conversion from 'T' to 'int' requires a narrowing conversion
-          with
-          [
-              T=float
-          ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\PlayScene.cpp(103,62): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\PlayScene.cpp(103,94): warning C4838: conversion from 'T' to 'int' requires a narrowing conversion
-          with
-          [
-              T=float
-          ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\PlayScene.cpp(103,94): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\PlayScene.cpp(108,22): warning C4552: '>': result of expression not used
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\PlayScene.cpp(112,65): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\PlayScene.cpp(112,46): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\PlayScene.cpp(154,31): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\PlayScene.cpp(154,26): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  main.cpp
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\main.cpp(9,32): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-  Plane.cpp
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\Plane.cpp(40,6): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\Plane.cpp(40,3): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-  Player.cpp
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\Player.cpp(42,7): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\Player.cpp(42,4): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\Player.cpp(46,7): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\Player.cpp(46,4): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\Player.cpp(50,7): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\Player.cpp(50,4): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\Player.cpp(54,7): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\Player.cpp(54,4): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\Player.cpp(58,7): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\Player.cpp(58,4): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-  Scene.cpp
-  ship.cpp
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\ship.cpp(12,15): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\ship.cpp(13,16): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\ship.cpp(37,46): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\ship.cpp(37,43): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\ship.cpp(149,35): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\ship.cpp(149,22): warning C4244: 'initializing': conversion from 'float' to 'const int', possible loss of data
+﻿  EndScene.cpp
   EventManager.cpp
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\EventManager.cpp(119,29): warning C4018: '<': signed/unsigned mismatch
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\EventManager.cpp(178,37): warning C4244: '=': conversion from 'Sint32' to 'T', possible loss of data
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\EventManager.cpp(119,29): warning C4018: '<': signed/unsigned mismatch
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\EventManager.cpp(178,37): warning C4244: '=': conversion from 'Sint32' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\EventManager.cpp(179,37): warning C4244: '=': conversion from 'Sint32' to 'T', possible loss of data
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\EventManager.cpp(179,37): warning C4244: '=': conversion from 'Sint32' to 'T', possible loss of data
           with
           [
               T=float
           ]
-  Generating Code...
-  Compiling...
+  Game.cpp
+  PlayScene.cpp
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\PlayScene.cpp(103,62): warning C4838: conversion from 'T' to 'int' requires a narrowing conversion
+          with
+          [
+              T=float
+          ]
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\PlayScene.cpp(103,62): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\PlayScene.cpp(103,94): warning C4838: conversion from 'T' to 'int' requires a narrowing conversion
+          with
+          [
+              T=float
+          ]
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\PlayScene.cpp(103,94): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\PlayScene.cpp(108,22): warning C4552: '>': result of expression not used
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\PlayScene.cpp(112,65): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\PlayScene.cpp(112,46): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\PlayScene.cpp(154,31): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\PlayScene.cpp(154,26): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  SpaceShip.cpp
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\SpaceShip.cpp(12,15): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\SpaceShip.cpp(13,16): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\SpaceShip.cpp(33,55): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\SpaceShip.cpp(33,27): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
   StartScene.cpp
   Target.cpp
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\Target.cpp(13,15): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\Target.cpp(13,15): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\Target.cpp(14,16): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\Target.cpp(14,16): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\Target.cpp(34,48): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\Target.cpp(34,48): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\Target.cpp(34,45): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\Target.cpp(34,45): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
           with
           [
               T=float
           ]
   TextureManager.cpp
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\TextureManager.cpp(137,36): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\TextureManager.cpp(137,21): warning C4244: 'initializing': conversion from 'double' to 'const int', possible loss of data
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\TextureManager.cpp(138,37): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\TextureManager.cpp(138,21): warning C4244: 'initializing': conversion from 'double' to 'const int', possible loss of data
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\TextureManager.cpp(180,36): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\TextureManager.cpp(180,21): warning C4244: 'initializing': conversion from 'double' to 'const int', possible loss of data
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\TextureManager.cpp(181,37): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\TextureManager.cpp(181,21): warning C4244: 'initializing': conversion from 'double' to 'const int', possible loss of data
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\TextureManager.cpp(197,34): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\TextureManager.cpp(197,26): warning C4244: 'initializing': conversion from 'float' to 'const int', possible loss of data
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\TextureManager.cpp(225,33): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\TextureManager.cpp(225,26): warning C4244: 'initializing': conversion from 'float' to 'const int', possible loss of data
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\TextureManager.cpp(232,32): warning C4018: '>': signed/unsigned mismatch
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\TextureManager.cpp(260,36): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\TextureManager.cpp(260,21): warning C4244: 'initializing': conversion from 'double' to 'const int', possible loss of data
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\TextureManager.cpp(261,37): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\TextureManager.cpp(261,21): warning C4244: 'initializing': conversion from 'double' to 'const int', possible loss of data
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\TextureManager.cpp(290,36): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\TextureManager.cpp(290,21): warning C4244: 'initializing': conversion from 'double' to 'const int', possible loss of data
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\TextureManager.cpp(291,37): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\TextureManager.cpp(291,21): warning C4244: 'initializing': conversion from 'double' to 'const int', possible loss of data
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\TextureManager.cpp(310,11): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\TextureManager.cpp(137,36): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\TextureManager.cpp(137,21): warning C4244: 'initializing': conversion from 'double' to 'const int', possible loss of data
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\TextureManager.cpp(138,37): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\TextureManager.cpp(138,21): warning C4244: 'initializing': conversion from 'double' to 'const int', possible loss of data
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\TextureManager.cpp(180,36): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\TextureManager.cpp(180,21): warning C4244: 'initializing': conversion from 'double' to 'const int', possible loss of data
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\TextureManager.cpp(181,37): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\TextureManager.cpp(181,21): warning C4244: 'initializing': conversion from 'double' to 'const int', possible loss of data
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\TextureManager.cpp(197,34): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\TextureManager.cpp(197,26): warning C4244: 'initializing': conversion from 'float' to 'const int', possible loss of data
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\TextureManager.cpp(225,33): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\TextureManager.cpp(225,26): warning C4244: 'initializing': conversion from 'float' to 'const int', possible loss of data
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\TextureManager.cpp(232,32): warning C4018: '>': signed/unsigned mismatch
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\TextureManager.cpp(260,36): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\TextureManager.cpp(260,21): warning C4244: 'initializing': conversion from 'double' to 'const int', possible loss of data
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\TextureManager.cpp(261,37): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\TextureManager.cpp(261,21): warning C4244: 'initializing': conversion from 'double' to 'const int', possible loss of data
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\TextureManager.cpp(290,36): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\TextureManager.cpp(290,21): warning C4244: 'initializing': conversion from 'double' to 'const int', possible loss of data
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\TextureManager.cpp(291,37): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\TextureManager.cpp(291,21): warning C4244: 'initializing': conversion from 'double' to 'const int', possible loss of data
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\TextureManager.cpp(310,11): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\mclea\Desktop\College\GAME3001_A2\src\TextureManager.cpp(311,11): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\TextureManager.cpp(311,11): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
           ]
+  Tile.cpp
+  main.cpp
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\main.cpp(9,32): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  ship.cpp
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\ship.cpp(12,15): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\ship.cpp(13,16): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\ship.cpp(37,46): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\ship.cpp(37,43): warning C4244: 'argument': conversion from 'const T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\ship.cpp(149,35): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\src\ship.cpp(149,22): warning C4244: 'initializing': conversion from 'float' to 'const int', possible loss of data
   Generating Code...
-  Template.vcxproj -> C:\Users\mclea\Desktop\College\GAME3001_A2\bin\Debug\Template.exe
+  Template.vcxproj -> C:\Users\mclea\Desktop\College\GAME3001_A2_McLeanCrowley\bin\Debug\Template.exe
