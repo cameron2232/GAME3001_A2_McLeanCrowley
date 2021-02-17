@@ -75,6 +75,14 @@ void Tile::addLabels()
 	m_statusLabel->setEnabled(false);
 }
 
+void Tile::setStatusLabel(int col, int row)
+{
+	std::stringstream stream;
+	stream << std::fixed << std::setprecision(1) << col << "," << row;
+	const std::string pos_string = stream.str();
+	m_statusLabel->setText(pos_string);
+}
+
 void Tile::setLabelsEnabled(const bool state)
 {
 	m_costLabel->setEnabled(state);
