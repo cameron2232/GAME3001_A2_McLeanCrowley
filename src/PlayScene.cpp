@@ -175,9 +175,16 @@ void PlayScene::m_buildGrid()
 			}
 			else
 			{
-				tile->setNeighbourTile(TOP_TILE, m_getTile(col, row - 1));
+				if (!m_getTile(col, row - 1)->getPassable())
+				{
+					tile->setNeighbourTile(TOP_TILE, nullptr);
+				}
+				else
+				{
+					tile->setNeighbourTile(TOP_TILE, m_getTile(col, row - 1));
+				}
+				
 			}
-
 			//right collumn
 			if(col == Config::COL_NUM-1)
 			{
@@ -185,7 +192,14 @@ void PlayScene::m_buildGrid()
 			}
 			else
 			{
-				tile->setNeighbourTile(RIGHT_TILE, m_getTile(col + 1, row));
+				if(!m_getTile(col + 1, row)->getPassable())
+				{
+					tile->setNeighbourTile(RIGHT_TILE, nullptr);
+				}
+				else
+				{
+					tile->setNeighbourTile(RIGHT_TILE, m_getTile(col + 1, row));
+				}
 			}
 
 			//bottom row
@@ -195,7 +209,14 @@ void PlayScene::m_buildGrid()
 			}
 			else
 			{
-				tile->setNeighbourTile(BOTTOM_TILE, m_getTile(col, row + 1));
+				if (!m_getTile(col, row + 1)->getPassable())
+				{
+					tile->setNeighbourTile(BOTTOM_TILE, nullptr);
+				}
+				else
+				{
+					tile->setNeighbourTile(BOTTOM_TILE, m_getTile(col, row + 1));
+				}
 			}
 
 			//left collumn
@@ -205,7 +226,14 @@ void PlayScene::m_buildGrid()
 			}
 			else
 			{
-				tile->setNeighbourTile(LEFT_TILE, m_getTile(col - 1, row));
+				if (!m_getTile(col - 1, row)->getPassable())
+				{
+					tile->setNeighbourTile(LEFT_TILE, nullptr);
+				}
+				else
+				{
+					tile->setNeighbourTile(LEFT_TILE, m_getTile(col - 1, row));
+				}
 			}
 
 		}
