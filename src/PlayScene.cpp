@@ -154,6 +154,7 @@ void PlayScene::m_buildGrid()
 			tile->setGridPosition(col, row);
 			addChild(tile);
 			tile->addLabels();
+			tile->setStatusLabel(col, row);
 			tile->setEnabled(false);
 			m_pGrid.push_back(tile);
 		}

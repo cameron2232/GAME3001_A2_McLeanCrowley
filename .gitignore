@@ -1,2 +1,12 @@
 
 .vs/
+
+Template/Intermediate/Debug/Template.tlog/
+
+*.obj
+
+*.log
+
+*.idb
+
+*.pdb

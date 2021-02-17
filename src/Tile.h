@@ -26,6 +26,7 @@ public:
 	void setTileCost(glm::vec2 target, glm::vec2 tile);
 
 	void addLabels();
+	void setStatusLabel(int col, int row);
 	void setLabelsEnabled(bool state);
 
 	glm::vec2 getGridPosition() const;
