@@ -24,6 +24,8 @@ public:
 
 	float getTileCost() const;
 	void setTileCost(glm::vec2 target, glm::vec2 tile);
+	bool getPassable() const;
+	void setPassable(bool passable);
 
 	void addLabels();
 	void setStatusLabel(int col, int row);
@@ -38,7 +40,7 @@ private:
 	Label* m_costLabel;
 	Label* m_statusLabel;
 	Tile* m_neighbours[NUM_OF_NEIGHBOUR_TILES];
-
+	bool m_IsPassable = true;
 	glm::vec2 m_gridPosition;
 };
 

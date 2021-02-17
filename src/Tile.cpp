@@ -12,8 +12,6 @@ Tile::Tile() : m_cost(0.0f)
 {
 	setWidth(Config::TILE_SIZE);
 	setHeight(Config::TILE_SIZE);
-
-
 }
 
 Tile::~Tile()
@@ -21,9 +19,17 @@ Tile::~Tile()
 
 void Tile::draw()
 {
-	Util::DrawRect(getTransform()->position, getWidth(), getHeight());
+	if(m_IsPassable)
+	{
+		Util::DrawRect(getTransform()->position, getWidth(), getHeight());
+	}
+	else
+	{
+		Util::DrawRect(getTransform()->position, getWidth(), getHeight(), glm::vec4(1, 0, 0, 1));
+	}
+	
 }
-
+// glm::vec4(1, 0, 0, 1) -> red
 void Tile::update()
 {
 }
@@ -58,6 +64,16 @@ void Tile::setTileCost(glm::vec2 target, glm::vec2 tile)
 	const std::string cost_string = stream.str();
 	
 	m_costLabel->setText(cost_string);
+}
+
+bool Tile::getPassable() const
+{
+	return m_IsPassable;
+}
+
+void Tile::setPassable(bool passable)
+{
+	m_IsPassable = passable;
 }
 
 void Tile::addLabels()

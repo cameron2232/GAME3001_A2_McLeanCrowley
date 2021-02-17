@@ -155,11 +155,12 @@ void PlayScene::m_buildGrid()
 			addChild(tile);
 			tile->addLabels();
 			tile->setStatusLabel(col, row);
+			//tile->setPassable(true);
 			tile->setEnabled(false);
 			m_pGrid.push_back(tile);
 		}
 	}
-
+	setBarriers();
 	// create references for each tile to every other tile
 	for (int row = 0; row < Config::ROW_NUM; ++row)
 	{
@@ -237,4 +238,75 @@ void PlayScene::m_setGridEnabled(bool state)
 Tile* PlayScene::m_getTile(const int col, const int row)
 {
 	return m_pGrid[(row * Config::COL_NUM) + col];
+}
+
+void PlayScene::m_setWall(Tile* tile, const bool passable)
+{
+	tile->setPassable(passable);
+}
+
+void PlayScene::setBarriers()
+{
+	for (int i = 0; i < 8; i++)
+	{
+		m_setWall(m_getTile(0, i), false);
+	}
+	for (int i = 0; i < 5; i++)
+	{
+		m_setWall(m_getTile(i, 0), false);
+	}
+	
+	m_setWall(m_getTile(5, 2), false);
+	m_setWall(m_getTile(5, 3), false);
+	m_setWall(m_getTile(6, 2), false);
+	m_setWall(m_getTile(6, 3), false);
+	
+	m_setWall(m_getTile(5, 5), false);
+	m_setWall(m_getTile(5, 7), false);
+	m_setWall(m_getTile(6, 6), false);
+	m_setWall(m_getTile(7, 5), false);
+	m_setWall(m_getTile(7, 7), false);
+
+	for(int i = 10; i < 16; i++)
+	{
+		m_setWall(m_getTile(i, 2), false);
+		m_setWall(m_getTile(i, 5), false);
+	}
+	m_setWall(m_getTile(10, 3), false);
+	m_setWall(m_getTile(15, 3), false);
+	m_setWall(m_getTile(15, 4), false);
+
+	for(int i = 11; i < 14; i++)
+	{
+		m_setWall(m_getTile(i, 7), false);
+	}
+
+	for(int i = 7; i < 11; i++)
+	{
+		m_setWall(m_getTile(i, 12), false);
+		m_setWall(m_getTile(i, 13), false);
+	}
+
+	for(int i = 8; i < 12; i++)
+	{
+		m_setWall(m_getTile(18, i), false);
+	}
+
+	m_setWall(m_getTile(12, 12), false);
+	m_setWall(m_getTile(12, 13), false);
+	m_setWall(m_getTile(13, 12), false);
+	m_setWall(m_getTile(15, 12), false);
+	m_setWall(m_getTile(14, 13), false);
+	m_setWall(m_getTile(15, 13), false);
+
+	m_setWall(m_getTile(18, 1), false);
+	m_setWall(m_getTile(18, 4), false);
+	m_setWall(m_getTile(19, 2), false);
+	m_setWall(m_getTile(19, 3), false);
+
+	m_setWall(m_getTile(4, 10), false);
+	m_setWall(m_getTile(4, 11), false);
+	m_setWall(m_getTile(3, 11), false);
+	m_setWall(m_getTile(2, 12), false);
+	m_setWall(m_getTile(3, 12), false);
 }

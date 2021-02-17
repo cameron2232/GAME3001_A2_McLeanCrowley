@@ -43,7 +43,10 @@ private:
 
 	// convenience functions
 	Tile* m_getTile(int col, int row);
+	void m_setWall(Tile* tile, bool passable);
+	void setBarriers();
 	
 };
+
 
 #endif /* defined (__PLAY_SCENE__) */
