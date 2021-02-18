@@ -2,10 +2,10 @@
 #ifndef __SHIP__
 #define __SHIP__
 
-#include "DisplayObject.h"
+#include "NavigationObject.h"
 #include "TextureManager.h"
 
-class Ship final : public DisplayObject
+class Ship final : public NavigationObject
 {
 public:
 	Ship();

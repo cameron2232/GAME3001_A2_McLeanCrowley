@@ -37,9 +37,41 @@ Tile* Tile::getNeighbourTile(const NeighbourTile position)
 	return m_neighbours[position];
 }
 
+TileStatus Tile::getTileStatus() const
+{
+	return m_status;
+}
+
 void Tile::setNeighbourTile(const NeighbourTile position, Tile* tile)
 {
 	m_neighbours[position] = tile;
+}
+
+void Tile::setTileStatus(TileStatus status)
+{
+	m_status = status;
+
+	switch (status)
+	{
+	case UNVISITED:
+		m_statusLabel->setText("--");
+		break;
+	case OPEN:
+		m_statusLabel->setText("O");
+		break;
+	case CLOSED:
+		m_statusLabel->setText("C");
+		break;
+	case IMPASSABLE:
+		m_statusLabel->setText("I");
+		break;
+	case GOAL:
+		m_statusLabel->setText("G");
+		break;
+	case START:
+		m_statusLabel->setText("S");
+		break;
+	}
 }
 
 float Tile::getTileCost() const
@@ -47,16 +79,28 @@ float Tile::getTileCost() const
 	return m_cost;
 }
 
-void Tile::setTileCost(glm::vec2 target, glm::vec2 tile)
+//void Tile::setTileCost(glm::vec2 target, glm::vec2 tile)
+//{
+//	auto distanceX = abs(tile.x - target.x);
+//	auto distanceY = abs(tile.y - target.y);
+//	m_cost = distanceX + distanceY;
+//	//format string to 1 decimal place
+//	std::stringstream stream;
+//	stream << std::fixed << std::setprecision(1) << m_cost;
+//	const std::string cost_string = stream.str();
+//	
+//	m_costLabel->setText(cost_string);
+//}
+
+void Tile::setTileCost(float cost)
 {
-	auto distanceX = abs(tile.x - target.x);
-	auto distanceY = abs(tile.y - target.y);
-	m_cost = distanceX + distanceY;
+	m_cost = cost;
+
 	//format string to 1 decimal place
 	std::stringstream stream;
-	stream << std::fixed << std::setprecision(1) << m_cost;
+	stream << std::fixed << std::setprecision(1) << cost;
 	const std::string cost_string = stream.str();
-	
+
 	m_costLabel->setText(cost_string);
 }
 
@@ -87,14 +131,4 @@ void Tile::setLabelsEnabled(const bool state)
 {
 	m_costLabel->setEnabled(state);
 	m_statusLabel->setEnabled(state);
-}
-
-glm::vec2 Tile::getGridPosition() const
-{
-	return m_gridPosition;
-}
-
-void Tile::setGridPosition(float col, float row)
-{
-	m_gridPosition = glm::vec2(col, row);
 }

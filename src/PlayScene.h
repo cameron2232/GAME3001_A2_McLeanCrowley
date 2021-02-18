@@ -10,6 +10,8 @@
 #include "Target.h"
 #include "Tile.h"
 #include "Goal.h"
+#include "ship.h"
+#include "Heuristic.h"
 
 class PlayScene : public Scene
 {
@@ -32,17 +34,28 @@ private:
 
 	Target* m_pTarget;
 	Goal* m_pGoal;
+	Ship* m_pShip;
 
 	// Pathfinding functions and objects
 	void m_buildGrid();
 	void m_computeTileCosts();
-
+	void m_findShortestPath();
+	void m_displayPathList();
 	
 	void m_setGridEnabled(bool state);
 	std::vector<Tile*> m_pGrid;
 
 	// convenience functions
 	Tile* m_getTile(int col, int row);
+	Tile* m_getTile(glm::vec2 grid_position);
+
+	//heuristic
+	Heuristic currentHeuristic;
+
+	//Open, closed, and path lists
+	std::vector<Tile*> m_pOpenList;
+	std::vector<Tile*> m_pClosedList;
+	std::vector<Tile*> m_pPathList;
 	
 };
 

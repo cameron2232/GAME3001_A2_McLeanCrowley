@@ -44,15 +44,6 @@ void Target::clean()
 {
 }
 
-glm::vec2 Target::getGridPosition() const
-{
-	return m_gridPosition;
-}
-
-void Target::setGridPosition(const float col, const float row)
-{
-	m_gridPosition = glm::vec2(col, row);
-}
 
 void Target::m_move()
 {

@@ -15,7 +15,7 @@ Goal::Goal()
 	getRigidBody()->velocity = glm::vec2(0, 0);
 	getRigidBody()->isColliding = false;
 
-	setType(GOAL);
+	//setType(GOAL);
 
 	//SoundManager::Instance().load("../Assets/audio/yay.ogg", "yay", SOUND_SFX);
 }

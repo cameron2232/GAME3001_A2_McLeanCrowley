@@ -40,8 +40,8 @@ void Ship::draw()
 
 void Ship::update()
 {
-	move();
-	m_checkBounds();
+	/*move();
+	m_checkBounds();*/
 }
 
 void Ship::clean()
