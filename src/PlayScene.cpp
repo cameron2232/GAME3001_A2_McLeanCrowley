@@ -18,6 +18,8 @@ PlayScene::~PlayScene()
 
 void PlayScene::draw()
 {
+	m_pBackground->draw();
+	
 	drawDisplayList();
 	
 	if(EventManager::Instance().isIMGUIActive())
@@ -65,6 +67,9 @@ void PlayScene::start()
 
 	m_buildGrid();
 
+	m_pBackground = new Background();
+	//addChild(m_pBackground);
+	
 	auto offset = glm::vec2(Config::TILE_SIZE * 0.5f, Config::TILE_SIZE * 0.5f);
 	m_pTarget = new Target();
 	m_pTarget->getTransform()->position = m_getTile(15, 11)->getTransform()->position + offset;
@@ -89,7 +94,7 @@ void PlayScene::GUI_Function()
 	// See examples by uncommenting the following - also look at imgui_demo.cpp in the IMGUI filter
 	//ImGui::ShowDemoWindow();
 	
-	ImGui::Begin("GAME3001 - Lab 4", NULL, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoMove);
+	ImGui::Begin("GAME3001 - Lab 4", NULL, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_MenuBar/* | ImGuiWindowFlags_NoMove*/);
 
 	static bool isGridEnabled = false;
 	if(ImGui::Checkbox("Grid Enabled", &isGridEnabled))
@@ -275,66 +280,53 @@ void PlayScene::m_setWall(Tile* tile, const bool passable)
 
 void PlayScene::setBarriers()
 {
-	for (int i = 0; i < 8; i++)
+	//Boat
+	for(int i = 0; i < 5; i++)
 	{
-		m_setWall(m_getTile(0, i), false);
+		m_setWall(m_getTile(2, i), false);
+		m_setWall(m_getTile(4, i), false);
 	}
-	for (int i = 0; i < 5; i++)
+	m_setWall(m_getTile(3, 0), false);
+	m_setWall(m_getTile(3, 1), false);
+
+	//Log
+	for(int i = 6; i < 11; i ++)
 	{
-		m_setWall(m_getTile(i, 0), false);
+		m_setWall(m_getTile(16, i), false);
 	}
-	
-	m_setWall(m_getTile(5, 2), false);
-	m_setWall(m_getTile(5, 3), false);
-	m_setWall(m_getTile(6, 2), false);
-	m_setWall(m_getTile(6, 3), false);
-	
-	m_setWall(m_getTile(5, 5), false);
-	m_setWall(m_getTile(5, 7), false);
+
+	//Liferafts
 	m_setWall(m_getTile(6, 6), false);
-	m_setWall(m_getTile(7, 5), false);
-	m_setWall(m_getTile(7, 7), false);
+	m_setWall(m_getTile(13, 9), false);
 
-	for(int i = 10; i < 16; i++)
+	//Whirlpool
+	for(int i = 2; i < 5; i++)
 	{
-		m_setWall(m_getTile(i, 2), false);
-		m_setWall(m_getTile(i, 5), false);
-	}
-	m_setWall(m_getTile(10, 3), false);
-	m_setWall(m_getTile(15, 3), false);
-	m_setWall(m_getTile(15, 4), false);
-
-	for(int i = 11; i < 14; i++)
-	{
-		m_setWall(m_getTile(i, 7), false);
+		for(int j = 9; j < 12; j++)
+		{
+			m_setWall(m_getTile(i, j), false);
+		}
 	}
 
-	for(int i = 7; i < 11; i++)
+	//Tanks
+	m_setWall(m_getTile(8, 4), false);
+	m_setWall(m_getTile(8, 9), false);
+
+	//Sharks
+	for(int i = 6; i < 9; i ++)
 	{
 		m_setWall(m_getTile(i, 12), false);
-		m_setWall(m_getTile(i, 13), false);
 	}
+	m_setWall(m_getTile(14, 3), false);
+	m_setWall(m_getTile(15, 3), false);
+	m_setWall(m_getTile(15, 4), false);
+	m_setWall(m_getTile(16, 4), false);
 
-	for(int i = 8; i < 12; i++)
+	//Eel
+	for(int i = 10; i < 13; i++)
 	{
-		m_setWall(m_getTile(18, i), false);
+		m_setWall(m_getTile(i, 6), false);
 	}
-
-	m_setWall(m_getTile(12, 12), false);
-	m_setWall(m_getTile(12, 13), false);
-	m_setWall(m_getTile(13, 12), false);
-	m_setWall(m_getTile(15, 12), false);
-	m_setWall(m_getTile(14, 13), false);
-	m_setWall(m_getTile(15, 13), false);
-
-	m_setWall(m_getTile(18, 1), false);
-	m_setWall(m_getTile(18, 4), false);
-	m_setWall(m_getTile(19, 2), false);
-	m_setWall(m_getTile(19, 3), false);
-
-	m_setWall(m_getTile(4, 10), false);
-	m_setWall(m_getTile(4, 11), false);
-	m_setWall(m_getTile(3, 11), false);
-	m_setWall(m_getTile(2, 12), false);
-	m_setWall(m_getTile(3, 12), false);
+	m_setWall(m_getTile(10, 7), false);
+	m_setWall(m_getTile(11, 7), false);
 }

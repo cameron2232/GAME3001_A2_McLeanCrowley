@@ -10,6 +10,7 @@
 #include "Target.h"
 #include "Tile.h"
 #include "Goal.h"
+#include "Background.h"
 
 class PlayScene : public Scene
 {
@@ -32,7 +33,7 @@ private:
 
 	Target* m_pTarget;
 	Goal* m_pGoal;
-
+	Background* m_pBackground;
 	// Pathfinding functions and objects
 	void m_buildGrid();
 	void m_computeTileCosts();
