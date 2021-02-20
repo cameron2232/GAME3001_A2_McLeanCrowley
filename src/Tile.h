@@ -5,7 +5,7 @@
 #include "NeighbourTile.h"
 #include "NavigationObject.h"
 #include "TileStatus.h"
-#include "EventManager.h"
+#include "CollisionManager.h"
 
 class Tile : public NavigationObject
 {

@@ -43,6 +43,42 @@ void PlayScene::update()
 	{
 		m_moveShip();
 	}
+	auto offset = glm::vec2(Config::TILE_SIZE * 0.5f, Config::TILE_SIZE * 0.5f);
+	if(EventManager::Instance().isIMGUIActive())
+	{
+		for (auto tile : m_pGrid)
+		{
+			if (EventManager::Instance().getMouseButton(0) && CollisionManager::pointRectCheck(EventManager::Instance().getMousePosition(), tile->getTransform()->position + offset, tile->getWidth(), tile->getHeight()))
+			{
+				if (tile->getTileStatus() != GOAL)
+				{
+					std::cout << "Changing start tile...\n";
+					m_getTile(m_pShip->getGridPosition())->setTileStatus(DEFAULT);
+					m_pShip->getTransform()->position = tile->getTransform()->position + offset;
+					m_pShip->setGridPosition(tile->getGridPosition().x, tile->getGridPosition().y);
+					tile->setTileStatus(START);
+				}
+				else
+				{
+					std::cout << "Cannot set Start Tile to Goal Tile!\n";
+				}
+			}
+			if (EventManager::Instance().getMouseButton(2) && CollisionManager::pointRectCheck(EventManager::Instance().getMousePosition(), tile->getTransform()->position + offset, tile->getWidth(), tile->getHeight()))
+			{
+				if (tile->getTileStatus() != START)
+				{
+					m_getTile(m_pTarget->getGridPosition())->setTileStatus(DEFAULT);
+					m_pTarget->getTransform()->position = tile->getTransform()->position + offset;
+					m_pTarget->setGridPosition(tile->getGridPosition().x, tile->getGridPosition().y);
+					tile->setTileStatus(GOAL);
+				}
+				else
+				{
+					std::cout << "Cannot set Goal Tile to Start Tile!\n";
+				}
+			}
+		}
+	}
 }
 
 void PlayScene::clean()
@@ -224,7 +260,7 @@ void PlayScene::GUI_Function()
 	}
 
 	ImGui::Separator();
-
+	
 	
 	ImGui::End();
 

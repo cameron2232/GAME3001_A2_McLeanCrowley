@@ -5,6 +5,7 @@
 
 
 #include "Config.h"
+#include "EventManager.h"
 #include "TextureManager.h"
 #include "Util.h"
 
@@ -25,11 +26,7 @@ void Tile::draw()
 }
 
 void Tile::update()
-{	
-	if(EventManager::Instance().getMouseButton(1) )
-	{
-		
-	}
+{
 }
 
 void Tile::clean()
