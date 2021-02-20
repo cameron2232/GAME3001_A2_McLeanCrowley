@@ -18,6 +18,8 @@ PlayScene::~PlayScene()
 
 void PlayScene::draw()
 {
+	m_pBackground->draw();
+	
 	drawDisplayList();
 	
 	if(EventManager::Instance().isIMGUIActive())
@@ -68,15 +70,18 @@ void PlayScene::start()
 	m_guiTitle = "Play Scene";
 
 	m_buildGrid();
+
+	m_pBackground = new Background();
+	//addChild(m_pBackground);
 	auto offset = glm::vec2(Config::TILE_SIZE * 0.5f, Config::TILE_SIZE * 0.5f);
 
 	currentHeuristic = EUCLIDEAN;
 
 	//add the ship to the scene as a start point
 	m_pShip = new Ship();
-	m_pShip->getTransform()->position = m_getTile(1, 3)->getTransform()->position + offset;
-	m_pShip->setGridPosition(1, 3);
-	m_getTile(1, 3)->setTileStatus(START);
+	m_pShip->getTransform()->position = m_getTile(3, 2)->getTransform()->position + offset;
+	m_pShip->setGridPosition(3, 2);
+	m_getTile(3, 2)->setTileStatus(START);
 	addChild(m_pShip);
 
 	//added the target as a goal
@@ -90,7 +95,7 @@ void PlayScene::start()
 	m_pGoal->getTransform()->position = m_getTile(4, 6)->getTransform()->position + offset;
 	m_pGoal->setGridPosition(4, 6);
 	addChild(m_pGoal);*/
-
+	setBarriers();
 	m_computeTileCosts();
 	
 }
@@ -409,4 +414,58 @@ void PlayScene::m_moveShip()
 	{
 		m_shipIsMoving = false;
 	}
+}
+
+void PlayScene::setBarriers()
+{
+	//boat
+	for(int i = 0; i < 5; i++)
+	{
+		m_getTile(0, i)->setTileStatus(IMPASSABLE);
+		m_getTile(2, i)->setTileStatus(IMPASSABLE);
+		m_getTile(4, i)->setTileStatus(IMPASSABLE);
+	}
+	m_getTile(3, 0)->setTileStatus(IMPASSABLE);
+	m_getTile(3, 1)->setTileStatus(IMPASSABLE);
+
+	//Log
+	for(int i = 6; i < 11; i++)
+	{
+		m_getTile(16, i)->setTileStatus(IMPASSABLE);
+	}
+
+	//Liferafts
+	m_getTile(6, 6)->setTileStatus(IMPASSABLE);
+	m_getTile(13, 9)->setTileStatus(IMPASSABLE);
+
+	//Whirlpool
+	for(int i = 2; i < 5; i++)
+	{
+		for(int j = 9; j < 12; j++)
+		{
+			m_getTile(i, j)->setTileStatus(IMPASSABLE);
+		}
+	}
+
+	//Tanks
+	m_getTile(8, 4)->setTileStatus(IMPASSABLE);
+	m_getTile(8, 9)->setTileStatus(IMPASSABLE);
+
+	//Sharks
+	for(int i = 6; i < 9; i++)
+	{
+		m_getTile(i, 12)->setTileStatus(IMPASSABLE);
+	}
+	m_getTile(14, 3)->setTileStatus(IMPASSABLE);
+	m_getTile(15, 3)->setTileStatus(IMPASSABLE);
+	m_getTile(15, 4)->setTileStatus(IMPASSABLE);
+	m_getTile(16, 4)->setTileStatus(IMPASSABLE);
+
+	//Eel
+	for(int i = 10; i < 13; i++)
+	{
+		m_getTile(i, 6)->setTileStatus(IMPASSABLE);
+	}
+	m_getTile(10, 7)->setTileStatus(IMPASSABLE);
+	m_getTile(11, 7)->setTileStatus(IMPASSABLE);
 }

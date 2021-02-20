@@ -12,6 +12,7 @@
 #include "Goal.h"
 #include "ship.h"
 #include "Heuristic.h"
+#include "Background.h"
 
 class PlayScene : public Scene
 {
@@ -36,6 +37,10 @@ private:
 	Goal* m_pGoal;
 	Ship* m_pShip;
 
+	Background* m_pBackground;
+
+	//Barriers
+	void setBarriers();
 	// Pathfinding functions and objects
 	void m_buildGrid();
 	void m_computeTileCosts();
