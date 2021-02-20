@@ -335,23 +335,31 @@ void PlayScene::m_findShortestPath()
 
 			for (auto neighbour : neighbourList)
 			{
-				if (neighbour->getTileStatus() != GOAL)
+				if(neighbour->getTileStatus() == IMPASSABLE)
 				{
-					if (neighbour->getTileCost() < min)
-					{
-						min = neighbour->getTileCost();
-						minTile = neighbour;
-						minTileIndex = count;
-					}
-					count++;
+					neighbour->setTileStatus(CLOSED);
 				}
 				else
 				{
-					minTile = neighbour;
-					m_pPathList.push_back(minTile);
-					goalFound = true;
-					break;
+					if (neighbour->getTileStatus() != GOAL)
+					{
+						if (neighbour->getTileCost() < min)
+						{
+							min = neighbour->getTileCost();
+							minTile = neighbour;
+							minTileIndex = count;
+						}
+						count++;
+					}
+					else
+					{
+						minTile = neighbour;
+						m_pPathList.push_back(minTile);
+						goalFound = true;
+						break;
+					}
 				}
+				
 			}
 
 			// remove the reference of the current tile in the open list
