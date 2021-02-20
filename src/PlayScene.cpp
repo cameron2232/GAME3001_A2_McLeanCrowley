@@ -18,14 +18,20 @@ PlayScene::~PlayScene()
 
 void PlayScene::draw()
 {
+	if (!EventManager::Instance().isIMGUIActive())
+	{
+		m_setGridEnabled(false);
+	}
 	m_pBackground->draw();
 	
 	drawDisplayList();
 	
 	if(EventManager::Instance().isIMGUIActive())
 	{
+		m_setGridEnabled(true);
 		GUI_Function();	
 	}
+	
 
 	SDL_SetRenderDrawColor(Renderer::Instance()->getRenderer(), 255, 255, 255, 255);
 }
@@ -156,7 +162,7 @@ void PlayScene::GUI_Function()
 		{
 			startPosition[1] > Config::ROW_NUM - 1;
 		}
-		m_getTile(m_pShip->getGridPosition())->setTileStatus(UNVISITED);
+		m_getTile(m_pShip->getGridPosition())->setTileStatus(DEFAULT);
 		SDL_RenderClear(Renderer::Instance()->getRenderer());
 		m_pShip->getTransform()->position = m_getTile(startPosition[0], startPosition[1])->getTransform()->position + offset;
 		m_pShip->setGridPosition(startPosition[0], startPosition[1]);
@@ -174,7 +180,7 @@ void PlayScene::GUI_Function()
 		{
 			targetPosition[1] = Config::ROW_NUM - 1;
 		}
-		m_getTile(m_pTarget->getGridPosition())->setTileStatus(UNVISITED);
+		m_getTile(m_pTarget->getGridPosition())->setTileStatus(DEFAULT);
 		SDL_RenderClear(Renderer::Instance()->getRenderer());
 		m_pTarget->getTransform()->position = m_getTile(targetPosition[0], targetPosition[1])->getTransform()->position + offset;
 		m_pTarget->setGridPosition(targetPosition[0], targetPosition[1]);
@@ -201,6 +207,8 @@ void PlayScene::GUI_Function()
 		m_pOpenList.shrink_to_fit();
 		m_pClosedList.clear();
 		m_pClosedList.shrink_to_fit();
+		m_pUnvisitedList.clear();
+		m_pUnvisitedList.shrink_to_fit();
 		m_pShip->getTransform()->position = m_getTile(3, 2)->getTransform()->position + offset;
 		m_pShip->setGridPosition(3, 2);
 		
@@ -388,75 +396,35 @@ void PlayScene::m_findShortestPath()
 			
 			for (auto neighbour : neighbourList)
 			{				
-				if (neighbour->getTileStatus() == UNVISITED || neighbour->getTileStatus() == DEFAULT) //if neighbour is unvisited
+				if (neighbour->getTileStatus() == UNVISITED || neighbour->getTileStatus() == DEFAULT) //if neighbour is unvisited or default (was not checked)
 				{
-					neighbour->setTileStatus(CLOSED); //set to unvisited
-					m_pClosedList.push_back(neighbour); //add neighbour to templist
+					neighbour->setTileStatus(CLOSED); //set to closed
+					//m_pClosedList.push_back(neighbour); //add neighbour to closedlist
 				}
 			}
 		}
 
-		auto tempTile = m_getTile(m_pShip->getGridPosition());
+	
 		
-		for (int index = 0; index < NUM_OF_NEIGHBOUR_TILES; ++index)
-		{
-			tempTile->getNeighbourTile(NeighbourTile(index));
-			if(tempTile->getNeighbourTile(NeighbourTile(index))->getTileStatus() == OPEN)
-			{
-				auto tempMin = tempTile->getNeighbourTile(NeighbourTile(index))->getTileCost();
-				for (int tempindex = 0; tempindex < NUM_OF_NEIGHBOUR_TILES; ++tempindex)
-				{
-					if (tempTile->getNeighbourTile(NeighbourTile(tempindex))->getTileStatus() != OPEN && tempTile->getNeighbourTile(NeighbourTile(tempindex))->getTileCost() <= tempMin)
-					{
-						tempTile->getNeighbourTile(NeighbourTile(tempindex))->setTileStatus(UNVISITED);
-						
-					}
-				}
-			}
-		}
-		tempTile = m_getTile(m_pShip->getGridPosition()); //set to start tile
-		auto tempMin = m_pPathList[1]->getTileCost();
-		for (int i = 1; i < m_pPathList.size(); i++) //go through each tile in list excluding start tile
-		{
-			auto tempTile = m_pPathList[i-1];
-			auto currTile = m_pPathList[i]; //set tile, starting at 1 (second in list)
+		for (int i = 0; i < m_pPathList.size(); i++) //go through each tile in list 
+		{		
+			auto currTile = m_pPathList[i]; //set tile, starting at 0 (start tile)
 			for (int tempindex = 0; tempindex < NUM_OF_NEIGHBOUR_TILES; ++tempindex) //for each neighbour
 			{
-				if(currTile->getNeighbourTile(NeighbourTile(tempindex))->getTileStatus() == CLOSED && currTile->getNeighbourTile(NeighbourTile(tempindex))->getTileCost() <= currTile->getTileCost())
-				{
+				if(currTile->getNeighbourTile(NeighbourTile(tempindex))->getTileStatus() == CLOSED && currTile->getNeighbourTile(NeighbourTile(tempindex))->getTileCost() <= currTile->getTileCost()
+					&& currTile->getNeighbourTile(NeighbourTile(tempindex))->getTileStatus()!= UNVISITED) //if neighbour is closed and not already set to unvisited 
+																										  // (some tiles are a good option for one tile, but not another, but neighbour both tiles)
+				{					
 					currTile->getNeighbourTile(NeighbourTile(tempindex))->setTileStatus(UNVISITED);
-				}				
-			}
-		}
-		
-		/*for(int i = 0; i < m_pPathList.size(); i++)
-		{
-			tempTile = m_pPathList[i];
-			auto nextTile = m_pPathList[i + 1];
-			for(int index = 0; index < NUM_OF_NEIGHBOUR_TILES; ++index)
-			{
-				
-			}
-		}*/
-		
-		/*for(auto tile : m_pPathList)
-		{
-			int tempCost = tile->getTileCost();
-			for (int index = 0; index < NUM_OF_NEIGHBOUR_TILES; ++index)
-			{
-				if(tile->getTileStatus() == UNVISITED && tile->getTileCost() <= tempCost)
-				{
-					tile->setTileStatus(UNVISITED);
-					m_pTempList.push_back(tile);
+					m_pUnvisitedList.push_back(currTile);
 				}
-				else if(tile->getTileStatus() == UNVISITED)
+				else
 				{
-					tile->setTileStatus(CLOSED);
-					m_pClosedList.push_back(tile);
+					m_pClosedList.push_back(currTile);
 				}
 			}
-			
-		}*/
+		}		
+		setBarriers();
 		m_displayPathList();
 	}
 

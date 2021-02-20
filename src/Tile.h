@@ -5,6 +5,7 @@
 #include "NeighbourTile.h"
 #include "NavigationObject.h"
 #include "TileStatus.h"
+#include "EventManager.h"
 
 class Tile : public NavigationObject
 {
@@ -36,9 +37,8 @@ public:
 	void setTileStatus(TileStatus status);
 
 	void addLabels();
-	void setStatusLabel(int col, int row);
 	void setLabelsEnabled(bool state);
-
+	bool isPressed();
 	
 
 private:
