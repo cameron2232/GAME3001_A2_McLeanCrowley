@@ -31,6 +31,10 @@ void PlayScene::draw()
 void PlayScene::update()
 {
 	updateDisplayList();
+	if (m_shipIsMoving)
+	{
+		m_moveShip();
+	}
 }
 
 void PlayScene::clean()
@@ -386,4 +390,23 @@ Tile* PlayScene::m_getTile(glm::vec2 grid_position)
 	const auto row = grid_position.y;
 
 	return m_pGrid[(row * Config::COL_NUM) + col];
+}
+
+void PlayScene::m_moveShip()
+{
+	auto offset = glm::vec2(Config::TILE_SIZE * 0.5f, Config::TILE_SIZE * 0.5f);
+	if (moveCounter < m_pPathList.size())
+	{
+
+		m_pShip->getTransform()->position = m_getTile(m_pPathList[moveCounter]->getGridPosition())->getTransform()->position + offset;
+		m_pShip->setGridPosition(m_pPathList[moveCounter]->getGridPosition().x, m_pPathList[moveCounter]->getGridPosition().y);
+		if (Game::Instance()->getFrames() % 20 == 0)
+		{
+			moveCounter++;
+		}
+	}
+	else
+	{
+		m_shipIsMoving = false;
+	}
 }
