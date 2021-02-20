@@ -4,12 +4,14 @@
 
 enum TileStatus
 {
+	
 	UNVISITED,
 	OPEN,
 	CLOSED,
 	IMPASSABLE,
 	GOAL,
-	START
+	START,
+	DEFAULT
 };
 
 #endif /* defined (__TILE_STATUS__) */

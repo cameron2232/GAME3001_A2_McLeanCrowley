@@ -195,7 +195,24 @@ void PlayScene::GUI_Function()
 	
 	if (ImGui::Button("Reset"))
 	{
+		m_pPathList.clear();
+		m_pPathList.shrink_to_fit();
+		m_pOpenList.clear();
+		m_pOpenList.shrink_to_fit();
+		m_pClosedList.clear();
+		m_pClosedList.shrink_to_fit();
+		m_pShip->getTransform()->position = m_getTile(3, 2)->getTransform()->position + offset;
+		m_pShip->setGridPosition(3, 2);
 		
+		m_pTarget->getTransform()->position = m_getTile(15, 11)->getTransform()->position + offset;
+		m_pTarget->setGridPosition(15, 11);
+		for(auto tile : m_pGrid)
+		{
+			tile->setTileStatus(DEFAULT);
+		}
+		m_getTile(3, 2)->setTileStatus(START);
+		m_getTile(15, 11)->setTileStatus(GOAL);
+		setBarriers();
 	}
 
 	ImGui::Separator();
@@ -223,7 +240,7 @@ void PlayScene::m_buildGrid()
 			tile->setGridPosition(col, row);
 			addChild(tile);
 			tile->addLabels();
-			tile->setStatusLabel(col, row);
+			//tile->setStatusLabel(col, row);
 			tile->setEnabled(false);
 			m_pGrid.push_back(tile);
 		}
@@ -299,9 +316,6 @@ void PlayScene::m_computeTileCosts()
 			distance = Util::distance(m_pTarget->getGridPosition(), tile->getGridPosition());
 			break;
 		}
-		
-
-		
 
 		//tile->setTileCost(m_pTarget->getGridPosition(), tile->getGridPosition());
 		tile->setTileCost(distance);
@@ -314,48 +328,48 @@ void PlayScene::m_findShortestPath()
 	{
 		// Step 1 - Add Start position to the open list
 		auto startTile = m_getTile(m_pShip->getGridPosition());
-		startTile->setTileStatus(OPEN);
-		m_pOpenList.push_back(startTile);
+		startTile->setTileStatus(OPEN); //set starting tile to open - this is where we start.
+		m_pOpenList.push_back(startTile); //add starting tile to open list.
 
 		bool goalFound = false;
 
 		// Step 2 - Loop until the OpenList is empty or the Goal is found
 		while (!m_pOpenList.empty() && !goalFound)
 		{
-			auto min = INFINITY;
+			auto min = INFINITY; 
 			Tile* minTile;
 			int minTileIndex = 0;
 			int count = 0;
 
 			std::vector<Tile*> neighbourList;
-			for (int index = 0; index < NUM_OF_NEIGHBOUR_TILES; ++index)
+			for (int index = 0; index < NUM_OF_NEIGHBOUR_TILES; ++index) //for each neighbour
 			{
-				neighbourList.push_back(m_pOpenList[0]->getNeighbourTile(NeighbourTile(index)));
+				neighbourList.push_back(m_pOpenList[0]->getNeighbourTile(NeighbourTile(index))); //get neighbour tiles of starting tile.
 			}
 
-			for (auto neighbour : neighbourList)
+			for (auto neighbour : neighbourList) //For loop through neighbours
 			{
-				if(neighbour->getTileStatus() == IMPASSABLE)
+				if(neighbour->getTileStatus() == IMPASSABLE) //if neighbour impassable, close
 				{
 					neighbour->setTileStatus(CLOSED);
 				}
 				else
 				{
-					if (neighbour->getTileStatus() != GOAL)
+					if (neighbour->getTileStatus() != GOAL) //if neighbour is not goal
 					{
-						if (neighbour->getTileCost() < min)
+						if (neighbour->getTileCost() < min) //if neighbour tile cost is less than current tile cost
 						{
-							min = neighbour->getTileCost();
-							minTile = neighbour;
-							minTileIndex = count;
+							min = neighbour->getTileCost(); //set min to neighbour tile cost
+							minTile = neighbour; //set min to neighbour
+							minTileIndex = count; //set minTileIndex to count, counting shortest path.
 						}
 						count++;
 					}
-					else
+					else //if neighbour IS goal
 					{
-						minTile = neighbour;
-						m_pPathList.push_back(minTile);
-						goalFound = true;
+						minTile = neighbour; //set minTile to neighbour
+						m_pPathList.push_back(minTile); //add neighbour to goal
+						goalFound = true; //goal is found! time to break out of the search algo.
 						break;
 					}
 				}
@@ -363,25 +377,86 @@ void PlayScene::m_findShortestPath()
 			}
 
 			// remove the reference of the current tile in the open list
-			m_pPathList.push_back(m_pOpenList[0]);
+			m_pPathList.push_back(m_pOpenList[0]); //add open list to pathlist.
 			m_pOpenList.pop_back(); // empties the open list
 
-			// add the minTile to the openList
-			m_pOpenList.push_back(minTile);
-			minTile->setTileStatus(OPEN);
-			neighbourList.erase(neighbourList.begin() + minTileIndex);
+			m_pOpenList.push_back(minTile); //add minTile to open list
+			minTile->setTileStatus(OPEN); //set minTile (the Goal) to OPEN
+			neighbourList.erase(neighbourList.begin() + minTileIndex); //erase list of neighbours
 
-			// push all remaining neighbours onto the closed list
+			//push all remaining neighbours onto the closed list
+			
 			for (auto neighbour : neighbourList)
-			{
-				if (neighbour->getTileStatus() == UNVISITED)
+			{				
+				if (neighbour->getTileStatus() == UNVISITED || neighbour->getTileStatus() == DEFAULT) //if neighbour is unvisited
 				{
-					neighbour->setTileStatus(CLOSED);
-					m_pClosedList.push_back(neighbour);
+					neighbour->setTileStatus(CLOSED); //set to unvisited
+					m_pClosedList.push_back(neighbour); //add neighbour to templist
 				}
 			}
 		}
 
+		auto tempTile = m_getTile(m_pShip->getGridPosition());
+		
+		for (int index = 0; index < NUM_OF_NEIGHBOUR_TILES; ++index)
+		{
+			tempTile->getNeighbourTile(NeighbourTile(index));
+			if(tempTile->getNeighbourTile(NeighbourTile(index))->getTileStatus() == OPEN)
+			{
+				auto tempMin = tempTile->getNeighbourTile(NeighbourTile(index))->getTileCost();
+				for (int tempindex = 0; tempindex < NUM_OF_NEIGHBOUR_TILES; ++tempindex)
+				{
+					if (tempTile->getNeighbourTile(NeighbourTile(tempindex))->getTileStatus() != OPEN && tempTile->getNeighbourTile(NeighbourTile(tempindex))->getTileCost() <= tempMin)
+					{
+						tempTile->getNeighbourTile(NeighbourTile(tempindex))->setTileStatus(UNVISITED);
+						
+					}
+				}
+			}
+		}
+		tempTile = m_getTile(m_pShip->getGridPosition()); //set to start tile
+		auto tempMin = m_pPathList[1]->getTileCost();
+		for (int i = 1; i < m_pPathList.size(); i++) //go through each tile in list excluding start tile
+		{
+			auto tempTile = m_pPathList[i-1];
+			auto currTile = m_pPathList[i]; //set tile, starting at 1 (second in list)
+			for (int tempindex = 0; tempindex < NUM_OF_NEIGHBOUR_TILES; ++tempindex) //for each neighbour
+			{
+				if(currTile->getNeighbourTile(NeighbourTile(tempindex))->getTileStatus() == CLOSED && currTile->getNeighbourTile(NeighbourTile(tempindex))->getTileCost() <= currTile->getTileCost())
+				{
+					currTile->getNeighbourTile(NeighbourTile(tempindex))->setTileStatus(UNVISITED);
+				}				
+			}
+		}
+		
+		/*for(int i = 0; i < m_pPathList.size(); i++)
+		{
+			tempTile = m_pPathList[i];
+			auto nextTile = m_pPathList[i + 1];
+			for(int index = 0; index < NUM_OF_NEIGHBOUR_TILES; ++index)
+			{
+				
+			}
+		}*/
+		
+		/*for(auto tile : m_pPathList)
+		{
+			int tempCost = tile->getTileCost();
+			for (int index = 0; index < NUM_OF_NEIGHBOUR_TILES; ++index)
+			{
+				if(tile->getTileStatus() == UNVISITED && tile->getTileCost() <= tempCost)
+				{
+					tile->setTileStatus(UNVISITED);
+					m_pTempList.push_back(tile);
+				}
+				else if(tile->getTileStatus() == UNVISITED)
+				{
+					tile->setTileStatus(CLOSED);
+					m_pClosedList.push_back(tile);
+				}
+			}
+			
+		}*/
 		m_displayPathList();
 	}
 
@@ -455,7 +530,6 @@ void PlayScene::setBarriers()
 	//boat
 	for(int i = 0; i < 5; i++)
 	{
-		m_getTile(0, i)->setTileStatus(IMPASSABLE);
 		m_getTile(2, i)->setTileStatus(IMPASSABLE);
 		m_getTile(4, i)->setTileStatus(IMPASSABLE);
 	}
@@ -482,7 +556,7 @@ void PlayScene::setBarriers()
 	}
 
 	//Tanks
-	m_getTile(8, 4)->setTileStatus(IMPASSABLE);
+	m_getTile(8, 5)->setTileStatus(IMPASSABLE);
 	m_getTile(8, 9)->setTileStatus(IMPASSABLE);
 
 	//Sharks

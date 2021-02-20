@@ -63,6 +63,7 @@ private:
 	std::vector<Tile*> m_pOpenList;
 	std::vector<Tile*> m_pClosedList;
 	std::vector<Tile*> m_pPathList;
+	std::vector<Tile*> m_pTempList;
 
 	void m_moveShip();
 	int moveCounter = 0;
