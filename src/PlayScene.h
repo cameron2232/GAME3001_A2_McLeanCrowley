@@ -32,6 +32,7 @@ private:
 	void GUI_Function();
 	std::string m_guiTitle;
 	glm::vec2 m_mousePosition;
+	bool m_isGridEnabled;
 
 	Target* m_pTarget;
 	Goal* m_pGoal;
@@ -48,6 +49,7 @@ private:
 	void m_displayPathList();
 	
 	void m_setGridEnabled(bool state);
+	bool m_getGridEnabled() const;
 	std::vector<Tile*> m_pGrid;
 
 	// convenience functions

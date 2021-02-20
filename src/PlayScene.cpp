@@ -62,6 +62,22 @@ void PlayScene::handleEvents()
 	{
 		TheGame::Instance()->changeSceneState(END_SCENE);
 	}
+
+	if (EventManager::Instance().isKeyDown(SDL_SCANCODE_F))
+	{
+		m_findShortestPath();
+	}
+
+	if (EventManager::Instance().isKeyDown(SDL_SCANCODE_M))
+	{
+		m_shipIsMoving = true;
+	}
+
+	if (EventManager::Instance().isKeyDown(SDL_SCANCODE_G))
+	{
+		m_setGridEnabled(!m_getGridEnabled());
+	}
+
 }
 
 void PlayScene::start()
@@ -294,71 +310,73 @@ void PlayScene::m_computeTileCosts()
 
 void PlayScene::m_findShortestPath()
 {
-	//Step 1 add start position to the open list
-	auto startTile = m_getTile(m_pShip->getGridPosition());
-	startTile->setTileStatus(OPEN);
-	m_pOpenList.push_back(startTile);
-
-	bool goalFound = false;
-
-	//Step 2 - Loop until the Open list is empty or the goal is found
-	while (!m_pOpenList.empty() && !goalFound)
+	if (m_pPathList.empty())
 	{
-		auto min = INFINITY;
-		Tile* minTile;
-		int minTileIndex = 0;
-		int count = 0;
+		// Step 1 - Add Start position to the open list
+		auto startTile = m_getTile(m_pShip->getGridPosition());
+		startTile->setTileStatus(OPEN);
+		m_pOpenList.push_back(startTile);
 
-		std::vector<Tile*> neighbourList;
-		for (int index = 0; index < NUM_OF_NEIGHBOUR_TILES; ++index)
+		bool goalFound = false;
+
+		// Step 2 - Loop until the OpenList is empty or the Goal is found
+		while (!m_pOpenList.empty() && !goalFound)
 		{
-			neighbourList.push_back(m_pOpenList[0]->getNeighbourTile(NeighbourTile(index)));
+			auto min = INFINITY;
+			Tile* minTile;
+			int minTileIndex = 0;
+			int count = 0;
 
-		}
-
-		for (auto neighbour : neighbourList)
-		{
-			if (neighbour->getTileStatus() != GOAL)
+			std::vector<Tile*> neighbourList;
+			for (int index = 0; index < NUM_OF_NEIGHBOUR_TILES; ++index)
 			{
-				if (neighbour->getTileCost() < min)
+				neighbourList.push_back(m_pOpenList[0]->getNeighbourTile(NeighbourTile(index)));
+			}
+
+			for (auto neighbour : neighbourList)
+			{
+				if (neighbour->getTileStatus() != GOAL)
 				{
-					min = neighbour->getTileCost();
-					minTile = neighbour;
-					minTileIndex = count;
+					if (neighbour->getTileCost() < min)
+					{
+						min = neighbour->getTileCost();
+						minTile = neighbour;
+						minTileIndex = count;
+					}
+					count++;
 				}
-				count++;
+				else
+				{
+					minTile = neighbour;
+					m_pPathList.push_back(minTile);
+					goalFound = true;
+					break;
+				}
 			}
-			else
+
+			// remove the reference of the current tile in the open list
+			m_pPathList.push_back(m_pOpenList[0]);
+			m_pOpenList.pop_back(); // empties the open list
+
+			// add the minTile to the openList
+			m_pOpenList.push_back(minTile);
+			minTile->setTileStatus(OPEN);
+			neighbourList.erase(neighbourList.begin() + minTileIndex);
+
+			// push all remaining neighbours onto the closed list
+			for (auto neighbour : neighbourList)
 			{
-				minTile = neighbour;
-				m_pPathList.push_back(minTile);
-				goalFound = true;
-				break;
+				if (neighbour->getTileStatus() == UNVISITED)
+				{
+					neighbour->setTileStatus(CLOSED);
+					m_pClosedList.push_back(neighbour);
+				}
 			}
 		}
 
-		//remove the reference of the current tile in the open list
-		m_pPathList.push_back(m_pOpenList[0]);
-		m_pOpenList.pop_back(); //empties the open list
-
-		//add the minTile to the openList
-		m_pOpenList.push_back(minTile);
-		neighbourList.erase(neighbourList.begin() + minTileIndex);
-
-		//push all remaining neighbours onto the closed list
-		for (auto neighbour : neighbourList)
-		{
-			if (neighbour->getTileStatus() == UNVISITED)
-			{
-				neighbour->setTileStatus(CLOSED);
-				m_pClosedList.push_back(neighbour);
-			}
-			
-		}
-
+		m_displayPathList();
 	}
 
-	m_displayPathList();
 }
 
 void PlayScene::m_displayPathList()
@@ -382,7 +400,14 @@ void PlayScene::m_setGridEnabled(bool state)
 	{
 		SDL_RenderClear(Renderer::Instance()->getRenderer());
 	}
+	m_isGridEnabled = state;
 }
+
+bool PlayScene::m_getGridEnabled() const
+{
+	return m_isGridEnabled;
+}
+
 
 Tile* PlayScene::m_getTile(const int col, const int row)
 {
@@ -399,6 +424,7 @@ Tile* PlayScene::m_getTile(glm::vec2 grid_position)
 
 void PlayScene::m_moveShip()
 {
+	std::cout << "Moving Ship...\n";
 	auto offset = glm::vec2(Config::TILE_SIZE * 0.5f, Config::TILE_SIZE * 0.5f);
 	if (moveCounter < m_pPathList.size())
 	{
