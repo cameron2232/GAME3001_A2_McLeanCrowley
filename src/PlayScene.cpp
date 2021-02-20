@@ -57,6 +57,7 @@ void PlayScene::update()
 					m_pShip->getTransform()->position = tile->getTransform()->position + offset;
 					m_pShip->setGridPosition(tile->getGridPosition().x, tile->getGridPosition().y);
 					tile->setTileStatus(START);
+					m_computeTileCosts();
 				}
 				else
 				{
@@ -71,6 +72,7 @@ void PlayScene::update()
 					m_pTarget->getTransform()->position = tile->getTransform()->position + offset;
 					m_pTarget->setGridPosition(tile->getGridPosition().x, tile->getGridPosition().y);
 					tile->setTileStatus(GOAL);
+					m_computeTileCosts();
 				}
 				else
 				{
