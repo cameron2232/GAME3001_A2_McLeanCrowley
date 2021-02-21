@@ -18,7 +18,7 @@ PlayScene::~PlayScene()
 
 void PlayScene::draw()
 {
-	if (!EventManager::Instance().isIMGUIActive())
+	if (!m_getDebugMode())
 	{
 		m_setGridEnabled(false);
 	}
@@ -28,10 +28,13 @@ void PlayScene::draw()
 	
 	if(EventManager::Instance().isIMGUIActive())
 	{
-		m_setGridEnabled(true);
 		GUI_Function();	
 	}
-	
+
+	if(m_getDebugMode())
+	{
+		m_setGridEnabled(true);
+	}
 
 	SDL_SetRenderDrawColor(Renderer::Instance()->getRenderer(), 255, 255, 255, 255);
 }
@@ -44,7 +47,7 @@ void PlayScene::update()
 		m_moveShip();
 	}
 	auto offset = glm::vec2(Config::TILE_SIZE * 0.5f, Config::TILE_SIZE * 0.5f);
-	if(EventManager::Instance().isIMGUIActive())
+	if(m_getDebugMode())
 	{
 		for (auto tile : m_pGrid)
 		{
@@ -120,6 +123,11 @@ void PlayScene::handleEvents()
 	if (EventManager::Instance().isKeyDown(SDL_SCANCODE_G))
 	{
 		m_setGridEnabled(!m_getGridEnabled());
+	}
+
+	if (EventManager::Instance().isKeyDown(SDL_SCANCODE_H))
+	{
+		m_setDebugMode(!m_getDebugMode());
 	}
 
 }
@@ -256,9 +264,12 @@ void PlayScene::GUI_Function()
 		{
 			tile->setTileStatus(DEFAULT);
 		}
-		m_getTile(3, 2)->setTileStatus(START);
-		m_getTile(15, 11)->setTileStatus(GOAL);
+		m_getTile(m_pShip->getGridPosition())->setTileStatus(START);
+		m_getTile(m_pTarget->getGridPosition())->setTileStatus(GOAL);
+		m_computeTileCosts();
 		setBarriers();
+		m_shipIsMoving = false;
+		moveCounter = 0;
 	}
 
 	ImGui::Separator();
@@ -423,11 +434,11 @@ void PlayScene::m_findShortestPath()
 			}
 
 			// remove the reference of the current tile in the open list
-			m_pPathList.push_back(m_pOpenList[0]); //add open list to pathlist.
-			m_pOpenList.pop_back(); // empties the open list
+			m_pPathList.push_back(m_pOpenList[0]); //add current tile
+			m_pOpenList.pop_back(); // empties the open list so minTile will be [0]
 
 			m_pOpenList.push_back(minTile); //add minTile to open list
-			minTile->setTileStatus(OPEN); //set minTile (the Goal) to OPEN
+			minTile->setTileStatus(OPEN); //set minTile to OPEN
 			neighbourList.erase(neighbourList.begin() + minTileIndex); //erase list of neighbours
 
 			//push all remaining neighbours onto the closed list
@@ -495,6 +506,16 @@ void PlayScene::m_setGridEnabled(bool state)
 bool PlayScene::m_getGridEnabled() const
 {
 	return m_isGridEnabled;
+}
+
+void PlayScene::m_setDebugMode(bool state)
+{
+	m_GridEnabled = state;
+}
+
+bool PlayScene::m_getDebugMode() const
+{
+	return m_GridEnabled;
 }
 
 

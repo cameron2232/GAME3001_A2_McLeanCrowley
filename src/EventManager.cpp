@@ -57,7 +57,7 @@ void EventManager::update()
             case SDL_KEYDOWN:
 	            onKeyDown();
 
-                if(event.key.keysym.sym == SDLK_h)
+                if(event.key.keysym.sym == SDLK_BACKQUOTE)
                 {
                     m_isIMGUIActive = (m_isIMGUIActive) ? false : true;
                 }

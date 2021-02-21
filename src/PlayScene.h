@@ -52,9 +52,13 @@ private:
 	bool m_getGridEnabled() const;
 	std::vector<Tile*> m_pGrid;
 
+
+	void m_setDebugMode(bool state);
+	bool m_getDebugMode() const;
 	// convenience functions
 	Tile* m_getTile(int col, int row);
 	Tile* m_getTile(glm::vec2 grid_position);
+
 
 	//heuristic
 	Heuristic currentHeuristic;
@@ -69,7 +73,7 @@ private:
 	void m_moveShip();
 	int moveCounter = 0;
 	bool m_shipIsMoving = false;
-	
+	bool m_GridEnabled = false;
 };
 
 #endif /* defined (__PLAY_SCENE__) */
