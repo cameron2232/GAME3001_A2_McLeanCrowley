@@ -83,18 +83,6 @@ float Tile::getTileCost() const
 	return m_cost;
 }
 
-//void Tile::setTileCost(glm::vec2 target, glm::vec2 tile)
-//{
-//	auto distanceX = abs(tile.x - target.x);
-//	auto distanceY = abs(tile.y - target.y);
-//	m_cost = distanceX + distanceY;
-//	//format string to 1 decimal place
-//	std::stringstream stream;
-//	stream << std::fixed << std::setprecision(1) << m_cost;
-//	const std::string cost_string = stream.str();
-//	
-//	m_costLabel->setText(cost_string);
-//}
 
 void Tile::setTileCost(float cost)
 {
