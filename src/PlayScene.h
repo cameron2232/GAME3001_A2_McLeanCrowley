@@ -47,6 +47,7 @@ private:
 	void m_computeTileCosts();
 	void m_findShortestPath();
 	void m_displayPathList();
+	void m_findNewPath(std::vector<Tile*> pathlist, Tile* startingpoint);
 	
 	void m_setGridEnabled(bool state);
 	bool m_getGridEnabled() const;
@@ -69,7 +70,7 @@ private:
 	std::vector<Tile*> m_pPathList;
 	std::vector<Tile*> m_pUnvisitedList;
 	std::vector<Tile*> m_ptempPathList;
-	std::vector<Tile> m_pNewPathList;
+	std::vector<Tile*> m_pNewPathList;
 	
 	void m_moveShip();
 	int moveCounter = 0;
