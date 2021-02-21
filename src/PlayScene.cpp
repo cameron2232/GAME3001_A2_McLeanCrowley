@@ -422,7 +422,6 @@ void PlayScene::m_findShortestPath()
 			Tile* minTile;
 			int minTileIndex = 0;
 			int count = 0;
-			int minCounter = 0;
 
 			std::vector<Tile*> neighbourList;
 			for (int index = 0; index < NUM_OF_NEIGHBOUR_TILES; ++index) //for each neighbour
@@ -444,7 +443,6 @@ void PlayScene::m_findShortestPath()
 					if (neighbour->getTileStatus() == IMPASSABLE || neighbour->getTileStatus() == CLOSED) //if neighbour impassable, close
 					{
 						neighbour->setTileStatus(CLOSED);
-						minCounter++;
 						count++;
 					}
 					else
@@ -456,7 +454,6 @@ void PlayScene::m_findShortestPath()
 								min = neighbour->getTileCost(); //set min to neighbour tile cost
 								minTile = neighbour; //set min to neighbour
 								minTileIndex = count; //set minTileIndex to count, counting shortest path.
-								minCounter++;
 							}
 							count++;
 						}
@@ -497,7 +494,7 @@ void PlayScene::m_findShortestPath()
 			}
 		}
 
-	
+		
 		
 		for (int i = 0; i < m_pPathList.size(); i++) //go through each tile in list 
 		{		
@@ -514,6 +511,7 @@ void PlayScene::m_findShortestPath()
 																										  // (some tiles are a good option for one tile, but not another, but neighbour both tiles)
 				{
 					neighbour->setTileStatus(UNVISITED);
+					m_pUnvisitedList.push_back(neighbour);
 				}
 				else
 				{
@@ -521,11 +519,12 @@ void PlayScene::m_findShortestPath()
 				}
 				
 			}
+		
 		}		
 		setBarriers();
 		m_displayPathList();
-	}
-
+	}	
+	
 }
 
 void PlayScene::m_displayPathList()
@@ -533,6 +532,7 @@ void PlayScene::m_displayPathList()
 	for (auto node : m_pPathList)
 	{
 		std::cout << "(" << node->getGridPosition().x << ", " << node->getGridPosition().y << ")" << std::endl;
+		
 	}
 	std::cout << "Path Length: " << m_pPathList.size() << std::endl;
 }
