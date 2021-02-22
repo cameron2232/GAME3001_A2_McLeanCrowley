@@ -43,6 +43,11 @@ TileStatus Tile::getTileStatus() const
 	return m_status;
 }
 
+void Tile::setColour(Uint8 r, Uint8 g, Uint8 b, Uint8 a)
+{
+	m_tileColour = { r, g, b, a };
+}
+
 void Tile::setNeighbourTile(const NeighbourTile position, Tile* tile)
 {
 	m_neighbours[position] = tile;
@@ -100,13 +105,13 @@ void Tile::addLabels()
 {
 	auto offset = glm::vec2(Config::TILE_SIZE * 0.5f, Config::TILE_SIZE * 0.5f);
 	
-	m_costLabel = new Label("99.9", "Consolas", 12, { 255,255,255,255 });
+	m_costLabel = new Label("99.9", "Consolas", 12, m_tileColour);
 	m_costLabel->getTransform()->position = getTransform()->position + offset + glm::vec2(0.0f, -6.0f);
 	getParent()->addChild(m_costLabel);
 	m_costLabel->setEnabled(false);
 
 
-	m_statusLabel = new Label("--", "Consolas", 12, { 255,255,255,255 });
+	m_statusLabel = new Label("--", "Consolas", 12, m_tileColour);
 	m_statusLabel->getTransform()->position = getTransform()->position + offset + glm::vec2(0.0f, 6.0f);
 	getParent()->addChild(m_statusLabel);
 	m_statusLabel->setEnabled(false);

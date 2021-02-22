@@ -28,9 +28,10 @@ public:
 	float getTileCost() const;
 	Tile* getNeighbourTile(NeighbourTile position);
 	TileStatus getTileStatus() const;
-
+	
 
 	//setters
+	void setColour(Uint8 r, Uint8 g, Uint8 b, Uint8 a);
 	//void setTileCost(glm::vec2 target, glm::vec2 tile);
 	void setTileCost(float cost);
 	void setNeighbourTile(NeighbourTile position, Tile* tile);
@@ -48,6 +49,7 @@ private:
 	Label* m_costLabel;
 	Label* m_statusLabel;
 	Tile* m_neighbours[NUM_OF_NEIGHBOUR_TILES];
+	SDL_Color m_tileColour = { 255, 255, 255 ,255 };
 };
 
 
