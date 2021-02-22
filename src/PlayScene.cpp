@@ -502,17 +502,33 @@ void PlayScene::m_findShortestPath()
 				{
 					if (neighbour->getTileStatus() == UNVISITED || neighbour->getTileStatus() == DEFAULT) //if neighbour is unvisited or default (was not checked)
 					{
-						neighbour->setTileStatus(CLOSED); //set to closed
-						
+						//neighbour->setTileStatus(CLOSED); //set to closed
+						//m_pClosedList.push_back(neighbour);
 					}
 				}
 			}
 		} // end of while loop, path calculated
+
+		//for (int i = 0; i < m_pPathList.size(); i++) //go through each tile in list 
+		//{
+		//	auto currTile = m_pPathList[i]; //set tile, starting at 0 (start tile)
+		//	for (int tempindex = 0; tempindex < NUM_OF_NEIGHBOUR_TILES; ++tempindex) //for each neighbour
+		//	{
+		//		auto neighbour = currTile->getNeighbourTile(NeighbourTile(tempindex));
+		//		if (neighbour != nullptr)
+		//		{
+		//			if (neighbour->getTileStatus() == CLOSED)
+		//			{
+		//				neighbour->setTileStatus(DEFAULT);
+		//			}
+		//		}
+		//	}
+		//}
+		
 		m_pOpenList.clear();
 		m_pOpenList.shrink_to_fit();
 		//setting unvisited tiles
 		bool newPathFound = false;
-		
 		for (int i = 0; i < m_pPathList.size(); i++) //go through each tile in list 
 		{
 			
@@ -526,42 +542,29 @@ void PlayScene::m_findShortestPath()
 				{
 					continue;
 				}
-				if (neighbour->getTileStatus() == CLOSED && neighbour->getTileCost() <= currTile->getTileCost()
-					&& neighbour->getTileStatus() != UNVISITED) //if neighbour is closed and not already set to unvisited 
-															    // (some tiles are a good option for one tile, but not another, but neighbour both tiles)
-				{
-					/*m_getTile(m_pTarget->getGridPosition())->setTileStatus(GOAL);
-					m_findNewPath(neighbour);
-					if (m_pNewPathList < m_pPathList)
+				
+					if (neighbour->getTileStatus() == UNVISITED) //if neighbour is closed and not already set to unvisited 
+																    // (some tiles are a good option for one tile, but not another, but neighbour both tiles)
 					{
-						newPathFound = true;
-						m_findNewPath(neighbour);
+						m_getTile(m_pTarget->getGridPosition())->setTileStatus(GOAL);
+						//m_findNewPath(neighbour);
 						
-					}	*/									
-				}
+						if (m_pNewPathList < m_pPathList)
+						{
+							
+							newPathFound = true;
+						}										
+					}
+				
 			}		
 		}
 		
-		for (int i = 0; i < m_pPathList.size(); i++) //go through each tile in list 
-		{
-			auto currTile = m_pPathList[i]; //set tile, starting at 0 (start tile)
-			for (int tempindex = 0; tempindex < NUM_OF_NEIGHBOUR_TILES; ++tempindex) //for each neighbour
-			{
-				auto neighbour = currTile->getNeighbourTile(NeighbourTile(tempindex));
-				if (neighbour != nullptr)
-				{
-					if (neighbour->getTileStatus() == CLOSED)
-					{
-						neighbour->setTileStatus(DEFAULT);
-					}
-				}
-			}
-		}
+		
 		if (m_pNewPathList <= m_pPathList && newPathFound)
 		{
 			m_pPathList = m_pNewPathList;
 		}
-		m_findUnvisiteds(m_pPathList);
+		//m_findUnvisiteds(m_pPathList);
 		//calculate unvisited paths
 		//m_findUnvisiteds(m_pPathList);
 		
@@ -602,7 +605,6 @@ void PlayScene::m_findUnvisiteds(std::vector<Tile*> tilevector)
 void PlayScene::m_findNewPath(Tile* startingTile)
 {
 		// Step 1 - Add Start position to the open list
-		
 		auto startTile = startingTile;
 		startTile->setTileStatus(OPEN); //set starting tile to open - this is where we start.
 		m_pOpenList.push_back(startTile); //add starting tile to open list.
@@ -627,26 +629,22 @@ void PlayScene::m_findNewPath(Tile* startingTile)
 			{
 
 				if (neighbour != nullptr)
-				{
-					if (neighbour->getTileStatus() == IMPASSABLE) //if neighbour impassable, continue
-					{
-						count++;
-						continue;
-					}
-					
+				{			
 						if (neighbour->getTileStatus() != GOAL)
 						{
-							if(neighbour->getTileStatus() == IMPASSABLE)
+							if(neighbour->getTileStatus() == IMPASSABLE || neighbour->getTileStatus() == CLOSED)
 							{
+								count++;
 								continue;
 							}
-							if (neighbour->getTileCost() < min && neighbour->getTileStatus() != CLOSED && neighbour->getTileStatus() != IMPASSABLE) //if neighbour tile cost is less than current tile cost
+							if (neighbour->getTileCost() < min) //if neighbour tile cost is less than current tile cost
 							{
-
+								neighbour->setTileStatus(UNVISITED);
 								min = neighbour->getTileCost(); //set min to neighbour tile cost
 								minTile = neighbour; //set min to neighbour
 								minTileIndex = count; //set minTileIndex to count, counting shortest path.
 							}
+							count++;
 						}
 						else if (neighbour->getTileStatus() == GOAL) //if neighbour IS goal
 						{
@@ -657,10 +655,10 @@ void PlayScene::m_findNewPath(Tile* startingTile)
 							goalFound = true; //goal is found! time to break out of the search algo.
 							break;
 						}
-						count++;
+						
 				}
 			} //end of for loop
-			std::cout << "(" << minTile->getGridPosition().x << ", " << minTile->getGridPosition().y << std::endl;
+			std::cout << "(" << minTile->getGridPosition().x << ", " << minTile->getGridPosition().y  << std::endl;
 			
 			if (!goalFound)
 			{
