@@ -187,7 +187,20 @@ void PlayScene::start()
 	m_getTile(15, 11)->setTileStatus(GOAL);
 	addChild(m_pTarget);
 
+	m_pInstructions = new Label("F - Calculate Shortest Path | M - Move Character | R - Reset | H - Toggle Debug Screen", "Consolas", 14, { 255, 0, 255, 255 }, glm::vec2(400.0f, 580.0f));
+	m_pInstructions->setParent(this);
+	addChild(m_pInstructions);
 
+	
+	
+
+	SoundManager::Instance().load("../Assets/audio/beach.mp3", "BeachMusic", SOUND_MUSIC);
+	SoundManager::Instance().load("../Assets/audio/water.wav", "Splash", SOUND_SFX);
+	SoundManager::Instance().allocateChannels(16);
+
+	SoundManager::Instance().playMusic("BeachMusic", -1, 0);
+	SoundManager::Instance().setMusicVolume(10);
+	SoundManager::Instance().setSoundVolume(10);
 	setBarriers();
 	m_computeTileCosts();
 	
@@ -535,9 +548,6 @@ void PlayScene::m_findShortestPath()
 		m_pNewPathList = m_pPathList;
 		
 		m_findAllPaths(m_pPathList);
-		
-		m_pNewPathList = m_pPathList;
-		
 		/*m_ptestList = m_ptempPathList;
 		m_findAllPaths(m_ptestList);
 		m_findUnvisiteds(m_ptestList);
@@ -565,11 +575,7 @@ void PlayScene::m_findUnvisiteds(std::vector<Tile*> tilevector)
 				continue;
 			}
 			if (neighbour->getTileStatus() != OPEN && neighbour->getTileCost() < currentTile->getTileCost() && neighbour->getTileStatus() != IMPASSABLE) //if neighbour is closed and not already set to unvisited 															                                                 // (some tiles are a good option for one tile, but not another, but neighbour both tiles)
-			{
-
-
-
-				
+			{			
 				neighbour->setTileStatus(UNVISITED);
 			}
 		}
@@ -699,6 +705,10 @@ void PlayScene::m_displayPathList()
 	for (auto node : m_pPathList)
 	{
 		std::cout << "(" << node->getGridPosition().x << ", " << node->getGridPosition().y << ")" << std::endl;
+		m_pPathTile = new PathTile();
+		m_pPathTile->getTransform()->position = node->getTransform()->position;
+		
+		addChild(m_pPathTile);
 		
 	}
 	std::cout << "Path Length: " << m_pPathList.size() << std::endl;
@@ -754,13 +764,42 @@ void PlayScene::m_moveShip()
 	auto offset = glm::vec2(Config::TILE_SIZE * 0.5f, Config::TILE_SIZE * 0.5f);
 	if (moveCounter < m_pPathList.size())
 	{
-		std::cout << "(" << m_pShip->getGridPosition().x << ", " << m_pShip->getGridPosition().y << ")" << std::endl;
+	
+		if (m_pShip->getGridPosition().x < m_pPathList[moveCounter]->getGridPosition().x && m_pShip->getGridPosition().y == m_pPathList[moveCounter]->getGridPosition().y) //moving right
+		{			
+		m_pShip->setCurrentHeading(0);
+		m_pShip->setFlip(0);
+		}
+		else if(m_pShip->getGridPosition().x > m_pPathList[moveCounter]->getGridPosition().x && m_pShip->getGridPosition().y == m_pPathList[moveCounter]->getGridPosition().y) //moving left
+		{
+			m_pShip->setCurrentHeading(0);
+			m_pShip->setFlip(1);
+		}
+		else if (m_pShip->getGridPosition().y < m_pPathList[moveCounter]->getGridPosition().y && m_pShip->getGridPosition().x == m_pPathList[moveCounter]->getGridPosition().x) //moving down
+		{
+			m_pShip->setCurrentHeading(90);
+		}
+		else if (m_pShip->getGridPosition().y > m_pPathList[moveCounter]->getGridPosition().y && m_pShip->getGridPosition().x == m_pPathList[moveCounter]->getGridPosition().x) //moving down
+		{
+			m_pShip->setCurrentHeading(-90);
+		}
+		
+		
+		m_pShip->setTargetPosition(m_getTile(m_pPathList[moveCounter]->getGridPosition())->getTransform()->position + offset);
+	
+			
+		
+		
 		m_pShip->getTransform()->position = m_getTile(m_pPathList[moveCounter]->getGridPosition())->getTransform()->position + offset;
 		m_pShip->setGridPosition(m_pPathList[moveCounter]->getGridPosition().x, m_pPathList[moveCounter]->getGridPosition().y);
-		if (Game::Instance()->getFrames() % 20 == 0)
+		
+		
+		if (Game::Instance()->getFrames() % 60 == 0)
 		{
+			SoundManager::Instance().playSound("Splash", 1, -1);
 			moveCounter++;
 		}
+		
 	}
 	else
 	{

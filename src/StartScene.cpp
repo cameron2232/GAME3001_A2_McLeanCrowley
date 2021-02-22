@@ -37,27 +37,27 @@ void StartScene::handleEvents()
 		TheGame::Instance()->quit();
 	}
 
-	if(EventManager::Instance().isKeyDown(SDL_SCANCODE_1))
-	{
-		TheGame::Instance()->changeSceneState(PLAY_SCENE);
-	}
+	//if(EventManager::Instance().isKeyDown(SDL_SCANCODE_1))
+	//{
+	//	TheGame::Instance()->changeSceneState(PLAY_SCENE);
+	//}
 }
 
 void StartScene::start()
 {
 	const SDL_Color blue = { 0, 0, 255, 255 };
-	m_pStartLabel = new Label("START SCENE", "Consolas", 80, blue, glm::vec2(400.0f, 40.0f));
+	m_pStartLabel = new Label("Cameron McLean & Patrick Crowley", "Consolas", 80, {255, 0, 0, 255}, glm::vec2(400.0f, 40.0f));
 	m_pStartLabel->setParent(this);
 	addChild(m_pStartLabel);
 
-	m_pInstructionsLabel = new Label("Press 1 to Play", "Consolas", 40, blue, glm::vec2(400.0f, 120.0f));
-	m_pInstructionsLabel->setParent(this);
-	addChild(m_pInstructionsLabel);
+	m_pStudentID = new Label("CM: 101318948 PC: 101305076", "Consolas", 40, { 255, 0, 0, 255 }, glm::vec2(400.0f, 120.0f));
+	m_pStudentID->setParent(this);
+	addChild(m_pStudentID);
 
 
-	m_pShip = new Ship();
+	/*m_pShip = new Ship();
 	m_pShip->getTransform()->position = glm::vec2(400.0f, 300.0f); 
-	addChild(m_pShip); 
+	addChild(m_pShip); */
 
 	// Start Button
 	m_pStartButton = new Button();

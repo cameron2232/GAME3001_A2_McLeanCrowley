@@ -32,6 +32,8 @@ public:
 	void setTargetPosition(glm::vec2 newPosition);
 	void setCurrentDirection(glm::vec2 newDirection);
 	void setMaxSpeed(float newSpeed);
+	void setCurrentHeading(float heading);
+	void setFlip(int flip);
 
 private:
 	void m_checkBounds();
@@ -45,7 +47,9 @@ private:
 	float m_currentHeading;
 	glm::vec2 m_currentDirection;
 	glm::vec2 m_targetPosition;
+	int m_flip = 0;
 };
+
 
 
 #endif /* defined (__SHIP__) */

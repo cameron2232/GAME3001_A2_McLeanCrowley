@@ -144,6 +144,9 @@
     <ClCompile Include="..\src\Background.cpp">
       <Filter>Game Objects</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\PathTile.cpp">
+      <Filter>Navigation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\StartScene.h">
@@ -304,6 +307,9 @@
     </ClInclude>
     <ClInclude Include="..\src\Background.h">
       <Filter>Game Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\PathTile.h">
+      <Filter>Navigation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

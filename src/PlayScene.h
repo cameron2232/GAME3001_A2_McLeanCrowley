@@ -13,6 +13,7 @@
 #include "ship.h"
 #include "Heuristic.h"
 #include "Background.h"
+#include "PathTile.h"
 
 class PlayScene : public Scene
 {
@@ -48,7 +49,7 @@ private:
 	void m_findShortestPath();
 	void m_displayPathList();
 	void m_findNewPath(Tile* startingpoint);
-	static void m_findUnvisiteds(std::vector<Tile*> tilevector);
+	void m_findUnvisiteds(std::vector<Tile*> tilevector);
 	void m_findAllPaths(std::vector<Tile*> checkedvector);
 	
 	void m_setGridEnabled(bool state);
@@ -74,8 +75,10 @@ private:
 	std::vector<Tile*> m_ptempPathList;
 	std::vector<Tile*> m_pNewPathList;
 	std::vector<Tile*> m_ptestList;
+	PathTile* m_pPathTile;
 
-
+	Label* m_pInstructions{};
+	Label* m_pInstructionsTwo{};
 	
 	void m_moveShip();
 	int moveCounter = 0;

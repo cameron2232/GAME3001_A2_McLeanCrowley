@@ -6,21 +6,21 @@
 
 Ship::Ship() : m_maxSpeed(10.0f)
 {
-	TextureManager::Instance()->load("../Assets/textures/ship3.png","ship");
+	TextureManager::Instance()->load("../Assets/textures/BB.png","ship");
 
 	auto size = TextureManager::Instance()->getTextureSize("ship");
 	setWidth(size.x);
 	setHeight(size.y);
 
 	getTransform()->position = glm::vec2(400.0f, 300.0f);
-	getRigidBody()->velocity = glm::vec2(0.0f, 0.0f);
+	getRigidBody()->velocity = glm::vec2(1.0f, 0.0f);
 	getRigidBody()->acceleration = glm::vec2(0.0f, 0.0f);
 	getRigidBody()->isColliding = false;
 	setType(SHIP);
 	
 	m_currentHeading = 0.0f; // current facing angle
-	m_currentDirection = glm::vec2(1.0f, 0.0f); // facing right
-	m_turnRate = 5.0f; // 5 degrees per frame
+	m_currentDirection = glm::vec2(0.0f, 0.0f); // facing right
+	m_turnRate = 3.0f; // 5 degrees per frame
 }
 
 
@@ -34,14 +34,18 @@ void Ship::draw()
 	const auto y = getTransform()->position.y;
 
 	// draw the ship
-	TextureManager::Instance()->draw("ship", x, y, m_currentHeading, 255, true);
+	TextureManager::Instance()->draw("ship", x, y, m_currentHeading, 255, true, static_cast<SDL_RendererFlip>(m_flip));
+}
+
+void Ship::setFlip(int flip)
+{
+	m_flip = flip;
 }
 
 
 void Ship::update()
 {
-	/*move();
-	m_checkBounds();*/
+
 }
 
 void Ship::clean()
@@ -53,7 +57,7 @@ void Ship::turnRight()
 	m_currentHeading += m_turnRate;
 	if (m_currentHeading >= 360) 
 	{
-		m_currentHeading -= 360.0f;
+		m_currentHeading -= 360;
 	}
 	m_changeDirection();
 }
@@ -116,6 +120,10 @@ void Ship::setMaxSpeed(float newSpeed)
 	m_maxSpeed = newSpeed;
 }
 
+void Ship::setCurrentHeading(float heading)
+{
+	m_currentHeading = heading;
+}
 
 
 void Ship::m_checkBounds()
