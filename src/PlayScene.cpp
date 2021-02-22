@@ -55,7 +55,7 @@ void PlayScene::update()
 			{
 				if (tile->getTileStatus() != GOAL && tile->getTileStatus() != IMPASSABLE)
 				{
-					std::cout << "Changing start tile...\n";
+					std::cout << "Changing start tile to (" << tile->getGridPosition().x << ", " << tile->getGridPosition().y << ")\n";
 					m_getTile(m_pShip->getGridPosition())->setTileStatus(DEFAULT);
 					m_pShip->getTransform()->position = tile->getTransform()->position + offset;
 					m_pShip->setGridPosition(tile->getGridPosition().x, tile->getGridPosition().y);
@@ -71,6 +71,7 @@ void PlayScene::update()
 			{
 				if (tile->getTileStatus() != START && tile->getTileStatus() != IMPASSABLE)
 				{
+					std::cout << "Changing Goal tile to (" << tile->getGridPosition().x << ", " << tile->getGridPosition().y << ")\n";
 					m_getTile(m_pTarget->getGridPosition())->setTileStatus(DEFAULT);
 					m_pTarget->getTransform()->position = tile->getTransform()->position + offset;
 					m_pTarget->setGridPosition(tile->getGridPosition().x, tile->getGridPosition().y);
@@ -139,8 +140,6 @@ void PlayScene::handleEvents()
 		m_pOpenList.shrink_to_fit();
 		m_pClosedList.clear();
 		m_pClosedList.shrink_to_fit();
-		m_pUnvisitedList.clear();
-		m_pUnvisitedList.shrink_to_fit();
 		m_pShip->getTransform()->position = m_getTile(3, 2)->getTransform()->position + offset;
 		m_pShip->setGridPosition(3, 2);
 
@@ -156,6 +155,12 @@ void PlayScene::handleEvents()
 		setBarriers();
 		m_shipIsMoving = false;
 		moveCounter = 0;
+		for (auto i : m_pPathTile)
+		{
+			removeChild(i);
+		}
+		m_pPathTile.clear();
+		m_pPathList.shrink_to_fit();
 	}
 
 }
@@ -199,8 +204,8 @@ void PlayScene::start()
 	SoundManager::Instance().allocateChannels(16);
 
 	SoundManager::Instance().playMusic("BeachMusic", -1, 0);
-	SoundManager::Instance().setMusicVolume(10);
-	SoundManager::Instance().setSoundVolume(10);
+	SoundManager::Instance().setMusicVolume(0);
+	SoundManager::Instance().setSoundVolume(0);
 	setBarriers();
 	m_computeTileCosts();
 	
@@ -291,8 +296,6 @@ void PlayScene::GUI_Function()
 		m_pOpenList.shrink_to_fit();
 		m_pClosedList.clear();
 		m_pClosedList.shrink_to_fit();
-		m_pUnvisitedList.clear();
-		m_pUnvisitedList.shrink_to_fit();
 		m_pShip->getTransform()->position = m_getTile(3, 2)->getTransform()->position + offset;
 		m_pShip->setGridPosition(3, 2);
 		
@@ -308,6 +311,13 @@ void PlayScene::GUI_Function()
 		setBarriers();
 		m_shipIsMoving = false;
 		moveCounter = 0;
+		//removeChild(m_pPathList);
+		for(auto i : m_pPathTile)
+		{
+			removeChild(i);
+		}
+		m_pPathTile.clear();
+		m_pPathList.shrink_to_fit();
 	}
 
 	ImGui::Separator();
@@ -437,31 +447,27 @@ void PlayScene::m_findShortestPath()
 			int count = 0;
 			std::vector<Tile*> neighbourList;
 			for (int index = 0; index < NUM_OF_NEIGHBOUR_TILES; ++index) //for each neighbour
-			{
-				
+			{				
 				neighbourList.push_back(m_pOpenList[0]->getNeighbourTile(NeighbourTile(index))); //get neighbour tiles of current tile				
 			}
-
 			for (auto neighbour : neighbourList) //For loop through neighbours
-			{
-				
+			{				
 				if (neighbour!= nullptr)
 				{
 					if (neighbour->getTileStatus() == IMPASSABLE || neighbour->getTileStatus() == CLOSED) //if neighbour impassable, close
 					{
-						neighbour->setTileStatus(CLOSED);
+						//neighbour->setTileStatus(CLOSED);
 						count++;
-					}
-					else
-					{
-						if (neighbour->getTileStatus() != GOAL && neighbour->getTileStatus() != CLOSED && neighbour->getTileStatus() != OPEN) //if neighbour is not goal, closed, or impassable
+						continue;
+					}					
+						if (neighbour->getTileStatus() != GOAL && neighbour->getTileStatus() != CLOSED && neighbour->getTileStatus() != OPEN && neighbour->getTileStatus() != IMPASSABLE) //if neighbour is not goal, closed, or impassable
 						{
 							if (neighbour->getTileCost() < min) //if neighbour tile cost is less than current tile cost
 							{
 								
 								min = neighbour->getTileCost(); //set min to neighbour tile cost
 								minTile = neighbour; //set min to neighbour
-								minTile->getGridPosition();
+								minTile->setTileStatus(UNVISITED);
 								minTileIndex = count; //set minTileIndex to count, counting shortest path.
 							}
 							count++;
@@ -475,7 +481,7 @@ void PlayScene::m_findShortestPath()
 							goalFound = true; //goal is found! time to break out of the search algo.
 							break;
 						}
-					}
+					
 				}
 			} //end of for loop
 			if (!goalFound)
@@ -505,12 +511,16 @@ void PlayScene::m_findShortestPath()
 		m_pOpenList.clear();
 		m_pOpenList.shrink_to_fit();
 		//setting unvisited tiles
-		setBarriers();
+		bool newPathFound = false;
+		
 		for (int i = 0; i < m_pPathList.size(); i++) //go through each tile in list 
-		{		
+		{
+			
+			m_ptempPathList.push_back(m_pPathList[i]);
 			auto currTile = m_pPathList[i]; //set tile, starting at 0 (start tile)
 			for (int tempindex = 0; tempindex < NUM_OF_NEIGHBOUR_TILES; ++tempindex) //for each neighbour
 			{
+				newPathFound = false;
 				auto neighbour = currTile->getNeighbourTile(NeighbourTile(tempindex));
 				if(neighbour == nullptr)
 				{
@@ -520,15 +530,18 @@ void PlayScene::m_findShortestPath()
 					&& neighbour->getTileStatus() != UNVISITED) //if neighbour is closed and not already set to unvisited 
 															    // (some tiles are a good option for one tile, but not another, but neighbour both tiles)
 				{
-					neighbour->setTileStatus(UNVISITED);
-					//m_pUnvisitedList.push_back(neighbour);
+					/*m_getTile(m_pTarget->getGridPosition())->setTileStatus(GOAL);
+					m_findNewPath(neighbour);
+					if (m_pNewPathList < m_pPathList)
+					{
+						newPathFound = true;
+						m_findNewPath(neighbour);
+						
+					}	*/									
 				}
-				else 
-				{
-					//m_pClosedList.push_back(neighbour);
-				}				
 			}		
 		}
+		
 		for (int i = 0; i < m_pPathList.size(); i++) //go through each tile in list 
 		{
 			auto currTile = m_pPathList[i]; //set tile, starting at 0 (start tile)
@@ -544,19 +557,14 @@ void PlayScene::m_findShortestPath()
 				}
 			}
 		}
+		if (m_pNewPathList <= m_pPathList && newPathFound)
+		{
+			m_pPathList = m_pNewPathList;
+		}
+		m_findUnvisiteds(m_pPathList);
 		//calculate unvisited paths
-		m_pNewPathList = m_pPathList;
+		//m_findUnvisiteds(m_pPathList);
 		
-		m_findAllPaths(m_pPathList);
-		/*m_ptestList = m_ptempPathList;
-		m_findAllPaths(m_ptestList);
-		m_findUnvisiteds(m_ptestList);
-							
-		
-		m_findUnvisiteds(m_ptestList);
-											*/
-		
-		//m_findUnvisiteds(m_ptempPathList, );
 		m_displayPathList();
 	} 
 }
@@ -574,128 +582,104 @@ void PlayScene::m_findUnvisiteds(std::vector<Tile*> tilevector)
 			{
 				continue;
 			}
-			if (neighbour->getTileStatus() != OPEN && neighbour->getTileCost() < currentTile->getTileCost() && neighbour->getTileStatus() != IMPASSABLE) //if neighbour is closed and not already set to unvisited 															                                                 // (some tiles are a good option for one tile, but not another, but neighbour both tiles)
+			if (neighbour->getTileStatus() != OPEN && neighbour->getTileCost() <= currentTile->getTileCost() && neighbour->getTileStatus() != IMPASSABLE) //if neighbour is closed and not already set to unvisited 															                                                 // (some tiles are a good option for one tile, but not another, but neighbour both tiles)
 			{			
 				neighbour->setTileStatus(UNVISITED);
-			}
+			}						
+			if(i != tilevector.size())
+			{
+				if(neighbour->getTileStatus()!= OPEN && neighbour->getTileCost() <= currentTile->getTileCost() 
+					&& neighbour->getTileStatus() != IMPASSABLE && neighbour->getTileCost() == tilevector[i+1]->getTileCost())
+				{
+					neighbour->setTileStatus(UNVISITED);
+				}
+			}			
 		}
 	}
 }
 
-void PlayScene::m_findAllPaths(std::vector<Tile*> checkedvector)
+
+void PlayScene::m_findNewPath(Tile* startingTile)
 {
-	
-		int unvisited = 0;
-		bool newPathFound = false;
-		for (auto i = 0; i < checkedvector.size(); i++)
+		// Step 1 - Add Start position to the open list
+		
+		auto startTile = startingTile;
+		startTile->setTileStatus(OPEN); //set starting tile to open - this is where we start.
+		m_pOpenList.push_back(startTile); //add starting tile to open list.
+
+		bool goalFound = false;
+		
+		// Step 2 - Loop until the OpenList is empty or the Goal is found
+		while (!m_pOpenList.empty() && !goalFound)
 		{
-			if (checkedvector[i]->getGridPosition() != m_pTarget->getGridPosition())
+			auto min = INFINITY;
+			Tile* minTile = startTile;
+			int minTileIndex = 0;
+			int count = 0;
+			std::vector<Tile*> neighbourList;
+			for (int index = 0; index < NUM_OF_NEIGHBOUR_TILES; index++)
 			{
-				auto currentTile = checkedvector[i];
-				for (int index = 0; index < NUM_OF_NEIGHBOUR_TILES; ++index) //for each neighbour
+				if(m_pOpenList[0]->getNeighbourTile(NeighbourTile(index)) != nullptr)
+					neighbourList.push_back(m_pOpenList[0]->getNeighbourTile(NeighbourTile(index))); //get neighbour tiles of current tile				
+			}
+
+			for (auto neighbour : neighbourList) //For loop through neighbours
+			{
+
+				if (neighbour != nullptr)
 				{
-					auto neighbour = currentTile->getNeighbourTile(NeighbourTile(index));
-					if (neighbour != nullptr)
+					if (neighbour->getTileStatus() == IMPASSABLE) //if neighbour impassable, continue
 					{
-						if (neighbour->getTileStatus() == UNVISITED)
+						count++;
+						continue;
+					}
+					
+						if (neighbour->getTileStatus() != GOAL)
 						{
-							m_ptempPathList.clear();
-							m_ptempPathList.shrink_to_fit();
-							for (int j = 0; j < i; j++)
+							if(neighbour->getTileStatus() == IMPASSABLE)
 							{
-								m_ptempPathList.push_back(checkedvector[j]);
+								continue;
 							}
-							m_getTile(m_pTarget->getGridPosition())->setTileStatus(GOAL);
-							m_findNewPath(neighbour);
-							if (m_ptempPathList.size() < m_pNewPathList.size())
+							if (neighbour->getTileCost() < min && neighbour->getTileStatus() != CLOSED && neighbour->getTileStatus() != IMPASSABLE) //if neighbour tile cost is less than current tile cost
 							{
-								std::cout << "New path set!\n";
-								m_pNewPathList = m_ptempPathList;
-								m_findUnvisiteds(m_pNewPathList);
-							
-								newPathFound = true;								
+
+								min = neighbour->getTileCost(); //set min to neighbour tile cost
+								minTile = neighbour; //set min to neighbour
+								minTileIndex = count; //set minTileIndex to count, counting shortest path.
 							}
 						}
-					}
-			}
-		}
-	}
-	if(newPathFound)
-	{
-		m_pPathList = m_pNewPathList;
-	}
-}
-
-
-void PlayScene::m_findNewPath(Tile* startingpoint)
-{
-	auto startTile = startingpoint;
-	startTile->setTileStatus(OPEN);
-	m_pOpenList.push_back(startTile); //add starting point tile to open list.
-	startTile->setColour(255, 0, 0, 255);
-
-	bool goalFound = false;
-
-	while (!m_pOpenList.empty() && !goalFound) //loop until goal found
-	{
-		auto min = INFINITY;
-		Tile* minTile;
-		int minTileIndex = 0;
-		int count = 0;
-		std::vector<Tile*> neighbourList;
-
-		for (int index = 0; index < NUM_OF_NEIGHBOUR_TILES; ++index) //for each neighbour
-		{
-			neighbourList.push_back(m_pOpenList[0]->getNeighbourTile(NeighbourTile(index))); //get neighbour tiles of current tile				
-		}
-		for (auto neighbour : neighbourList) //For loop through neighbours
-		{
-			if (neighbour != nullptr)
-			{
-				if (neighbour->getTileStatus() == IMPASSABLE || neighbour->getTileStatus() == CLOSED)
-				{
-					neighbour->setTileStatus(CLOSED);
-					count++;
-				}
-				else
-				{
-					if(neighbour->getTileStatus() != GOAL && neighbour->getTileStatus() != CLOSED)
-					{
-						if(neighbour->getTileCost() < min)
+						else if (neighbour->getTileStatus() == GOAL) //if neighbour IS goal
 						{
-							min = neighbour->getTileCost(); //set min to neighbour tile cost
-							minTile = neighbour; //set min to neighbour
-							minTile->setColour(255, 0, 0, 255);
-							minTileIndex = count; //set minTileIndex to count, counting shortest path.
+							std::cout << "goal found yay\n";
+							minTile = neighbour; //set minTile to neighbour
+							m_ptempPathList.push_back(m_pOpenList[0]);
+							m_ptempPathList.push_back(minTile); //add neighbour to goal
+							goalFound = true; //goal is found! time to break out of the search algo.
+							break;
 						}
 						count++;
-					}
-					else if(neighbour->getTileStatus() == GOAL)
-					{
-						std::cout << "goal found\n";
-						minTile = neighbour; //set minTile to neighbour
-						m_ptempPathList.push_back(m_pOpenList[0]);
-						m_ptempPathList.push_back(minTile); //add neighbour to goal
-						goalFound = true; //goal is found! time to break out of the search algo.
-						break;
-					}
 				}
-				
+			} //end of for loop
+			std::cout << "(" << minTile->getGridPosition().x << ", " << minTile->getGridPosition().y << std::endl;
+			
+			if (!goalFound)
+			{
+				m_ptempPathList.push_back(m_pOpenList[0]);
+			}//add current tile
+			if(goalFound)
+			{
+				break;
 			}
+			m_pOpenList.pop_back(); // empties the open list so minTile will be [0]
+
+			m_pOpenList.push_back(minTile); //add minTile to open list
+			minTile->setTileStatus(OPEN); //set minTile to OPEN
+			neighbourList.erase(neighbourList.begin() + minTileIndex); //erase list of neighbours
 		}
-
-		if(!goalFound)
-			m_ptempPathList.push_back(m_pOpenList[0]); //add current tile
-		m_pOpenList.pop_back(); // empties the open list so minTile will be [0]
-		m_pOpenList.push_back(minTile); //add minTile to open list
-		minTile->setTileStatus(OPEN); //set minTile to OPEN
-		neighbourList.erase(neighbourList.begin() + minTileIndex); //erase list of neighbours
-
-	} //end of while loop
-	m_pOpenList.clear();
-	m_pOpenList.shrink_to_fit();
-
-	setBarriers();
+		if (m_ptempPathList.size() <= m_pPathList.size());
+		{
+			m_pNewPathList = m_ptempPathList;
+		}
 }
 
   
@@ -705,10 +689,10 @@ void PlayScene::m_displayPathList()
 	for (auto node : m_pPathList)
 	{
 		std::cout << "(" << node->getGridPosition().x << ", " << node->getGridPosition().y << ")" << std::endl;
-		m_pPathTile = new PathTile();
-		m_pPathTile->getTransform()->position = node->getTransform()->position;
+		m_pPathTile.push_back(new PathTile()); 
+		m_pPathTile[m_pPathTile.size()-1]->getTransform()->position = node->getTransform()->position;
 		
-		addChild(m_pPathTile);
+		addChild(m_pPathTile[m_pPathTile.size() - 1]);
 		
 	}
 	std::cout << "Path Length: " << m_pPathList.size() << std::endl;

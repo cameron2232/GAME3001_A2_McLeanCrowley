@@ -48,9 +48,8 @@ private:
 	void m_computeTileCosts();
 	void m_findShortestPath();
 	void m_displayPathList();
-	void m_findNewPath(Tile* startingpoint);
+	void m_findNewPath(Tile* tilestart);
 	void m_findUnvisiteds(std::vector<Tile*> tilevector);
-	void m_findAllPaths(std::vector<Tile*> checkedvector);
 	
 	void m_setGridEnabled(bool state);
 	bool m_getGridEnabled() const;
@@ -71,11 +70,11 @@ private:
 	std::vector<Tile*> m_pOpenList;
 	std::vector<Tile*> m_pClosedList;
 	std::vector<Tile*> m_pPathList;
-	std::vector<Tile*> m_pUnvisitedList;
 	std::vector<Tile*> m_ptempPathList;
 	std::vector<Tile*> m_pNewPathList;
 	std::vector<Tile*> m_ptestList;
-	PathTile* m_pPathTile;
+	std::vector<PathTile*> m_pPathTile;
+	std::vector<Tile*> m_saveTiles;
 
 	Label* m_pInstructions{};
 	Label* m_pInstructionsTwo{};
