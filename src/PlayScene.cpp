@@ -2,6 +2,8 @@
 #include "Game.h"
 #include "EventManager.h"
 
+
+
 // required for IMGUI
 #include "imgui.h"
 #include "imgui_sdl.h"
@@ -195,6 +197,12 @@ void PlayScene::start()
 	m_pInstructions = new Label("F - Calculate Shortest Path | M - Move Character | R - Reset | H - Toggle Debug Screen", "Consolas", 14, { 255, 0, 255, 255 }, glm::vec2(400.0f, 580.0f));
 	m_pInstructions->setParent(this);
 	addChild(m_pInstructions);
+
+	m_pPathCost = new Label("The cost of the Path is", "Consolas", 14, { 255, 0, 255, 255 }, glm::vec2(100.0f, 500.0f));
+	m_pPathCost->setParent(this);
+	addChild(m_pPathCost);
+
+	
 
 	
 	
@@ -656,7 +664,13 @@ void PlayScene::m_displayPathList()
 		
 		addChild(m_pPathTile[m_pPathTile.size() - 1]);
 		
+		
 	}
+	totalCost = m_pPathList.size();
+	m_convertedCost = std::to_string(totalCost);
+	m_pTotalCost = new Label(m_convertedCost, "Consolas", 14, { 255, 0, 255, 255 }, glm::vec2(215.0f, 500.0f));
+	m_pTotalCost->setParent(this);
+	addChild(m_pTotalCost);
 	std::cout << "Path Length: " << m_pPathList.size() << std::endl;
 }
 
