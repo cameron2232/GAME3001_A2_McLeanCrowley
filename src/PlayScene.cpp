@@ -163,6 +163,10 @@ void PlayScene::handleEvents()
 		}
 		m_pPathTile.clear();
 		m_pPathList.shrink_to_fit();
+		m_ptempPathList.clear();
+		m_ptempPathList.shrink_to_fit();
+		m_pNewPathList.clear();
+		m_pNewPathList.shrink_to_fit();
 	}
 
 }
@@ -194,11 +198,11 @@ void PlayScene::start()
 	m_getTile(15, 11)->setTileStatus(GOAL);
 	addChild(m_pTarget);
 
-	m_pInstructions = new Label("F - Calculate Shortest Path | M - Move Character | R - Reset | H - Toggle Debug Screen", "Consolas", 14, { 255, 0, 255, 255 }, glm::vec2(400.0f, 580.0f));
+	m_pInstructions = new Label("F - Calculate Shortest Path | M - Move Character | R - Reset | H - Toggle Debug Screen", "Consolas", 14, { 0, 255, 255, 255 }, glm::vec2(400.0f, 580.0f));
 	m_pInstructions->setParent(this);
 	addChild(m_pInstructions);
 
-	m_pPathCost = new Label("The cost of the Path is", "Consolas", 14, { 255, 0, 255, 255 }, glm::vec2(100.0f, 500.0f));
+	m_pPathCost = new Label("The cost of the Path is", "Consolas", 14, { 0, 255, 255, 255 }, glm::vec2(100.0f, 500.0f));
 	m_pPathCost->setParent(this);
 	addChild(m_pPathCost);
 
@@ -212,8 +216,8 @@ void PlayScene::start()
 	SoundManager::Instance().allocateChannels(16);
 
 	SoundManager::Instance().playMusic("BeachMusic", -1, 0);
-	SoundManager::Instance().setMusicVolume(0);
-	SoundManager::Instance().setSoundVolume(0);
+	SoundManager::Instance().setMusicVolume(5);
+	SoundManager::Instance().setSoundVolume(8);
 	setBarriers();
 	m_computeTileCosts();
 	
