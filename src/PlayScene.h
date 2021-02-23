@@ -2,6 +2,7 @@
 #ifndef __PLAY_SCENE__
 #define __PLAY_SCENE__
 
+
 #include "Scene.h"
 #include "Button.h"
 #include "Label.h"
@@ -14,6 +15,7 @@
 #include "Heuristic.h"
 #include "Background.h"
 #include "PathTile.h"
+#include <string>
 
 class PlayScene : public Scene
 {
@@ -78,10 +80,13 @@ private:
 	PathTile* m_pPathTile;
 
 	Label* m_pInstructions{};
-	Label* m_pInstructionsTwo{};
+	Label* m_pTotalCost{};
+	Label* m_pPathCost{};
 	
 	void m_moveShip();
 	int moveCounter = 0;
+	int totalCost = 0;
+	std::string m_convertedCost;
 	bool m_shipIsMoving = false;
 	bool m_GridEnabled = false;
 };
